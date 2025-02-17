@@ -22,6 +22,8 @@ const config = {
   '**/*.{md,mdx}': (filenames) => filenames.map((filename) => `npm run format:lint-staged '${filename}'`),
   // [Dart]
   //'**/*.dart': (filenames) => filenames.map((filename) => `npm run format:dart:lint-staged '${filename}'`),
+  // [Terraform]
+  '**/*.tf': (filenames) => filenames.map((filename) => `npm run format:terraform '${filename}'`),
 
   // Linting
   // Uncomment if needed

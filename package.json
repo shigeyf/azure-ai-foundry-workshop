@@ -13,7 +13,8 @@
     "commit": "git-cz",
     "format:check": "prettier --check .",
     "format:fix": "prettier --write .",
-    "format:lint-staged": "prettier --write"
+    "format:lint-staged": "prettier --write",
+    "format:terraform": "terraform fmt"
   },
   "config": {
     "commitizen": {
