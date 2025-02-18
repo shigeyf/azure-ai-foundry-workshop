@@ -14,6 +14,8 @@
 /** @type {import("lint-staged").configObject} */
 const config = {
   // Formatting
+  // [Terraform]
+  '**/*.tf': (filenames) => filenames.map((filename) => `npm run format:terraform '${filename}'`),
   // [JSON]
   '**/*.json': (filenames) => filenames.map((filename) => `npm run format:lint-staged '${filename}'`),
   // [YAML]
@@ -22,10 +24,10 @@ const config = {
   '**/*.{md,mdx}': (filenames) => filenames.map((filename) => `npm run format:lint-staged '${filename}'`),
   // [Dart]
   //'**/*.dart': (filenames) => filenames.map((filename) => `npm run format:dart:lint-staged '${filename}'`),
-  // [Terraform]
-  '**/*.tf': (filenames) => filenames.map((filename) => `npm run format:terraform '${filename}'`),
 
   // Linting
+  // [Terraform]
+  '**/*.tf': (filenames) => `tflint --recursive')`
   // Uncomment if needed
   // [JS/TS/Vue]
   // '**/*.{js,jsx,ts,tsx,vue}': (filenames) => filenames.map((filename) => `npm run eslint:lint-staged '${filename}'`),
@@ -33,5 +35,6 @@ const config = {
   // '**/*.{sass,scss,css}': (filenames) => filenames.map((filename) => `npm run stylelint:lint-staged '${filename}'`),
   // [Dart]
   //'**/*.dart': (filenames) => filenames.map((filename) => `npm run dartlint:lint-staged '${filename}'`),
+  // [Terraform]
 }
 module.exports = config
