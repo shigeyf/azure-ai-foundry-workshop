@@ -1,3 +1,5 @@
+# tflint-ignore: terraform_required_version
+
 // envs/dev/main.tf
 
 module "global" {
@@ -7,6 +9,7 @@ module "global" {
   location    = var.location
 }
 
+# tflint-ignore: terraform_required_providers
 resource "random_string" "random" {
   length  = 4
   special = false

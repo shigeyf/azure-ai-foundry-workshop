@@ -1,8 +1,8 @@
 //
 
 module "user_assigned_identity_for_storage" {
-  source = "Azure/avm-res-managedidentity-userassignedidentity/azurerm"
-  // version = "0.3.3"
+  source  = "Azure/avm-res-managedidentity-userassignedidentity/azurerm"
+  version = "0.3.3"
 
   name                = local.uami_name_for_storage
   location            = local.resource_group_location

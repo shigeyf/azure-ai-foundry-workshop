@@ -1,8 +1,8 @@
 //
 
 module "storage_account" {
-  source = "Azure/avm-res-storage-storageaccount/azurerm"
-  //version = "0.5.0"
+  source  = "Azure/avm-res-storage-storageaccount/azurerm"
+  version = "0.5.0"
 
   // Basic properties
   name                = local.storage_account_name

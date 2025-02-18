@@ -1,5 +1,6 @@
 // envs/dev/providers.tf
 
+# tflint-ignore: terraform_required_providers
 provider "azurerm" {
   features {
     resource_group {

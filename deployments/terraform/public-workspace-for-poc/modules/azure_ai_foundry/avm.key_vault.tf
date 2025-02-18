@@ -1,8 +1,8 @@
 //
 
 module "key_vault" {
-  source = "Azure/avm-res-keyvault-vault/azurerm"
-  // version = "0.9.1"
+  source  = "Azure/avm-res-keyvault-vault/azurerm"
+  version = "0.9.1"
 
   // Basic properties
   name                = local.key_vault_name
