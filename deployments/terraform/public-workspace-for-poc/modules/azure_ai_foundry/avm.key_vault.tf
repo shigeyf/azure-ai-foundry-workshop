@@ -1,4 +1,4 @@
-//
+// avm.key_vault.tf
 
 module "key_vault" {
   source  = "Azure/avm-res-keyvault-vault/azurerm"
@@ -16,7 +16,6 @@ module "key_vault" {
   network_acls = {
     default_action = "Allow"
   }
-
   keys = {
     cmk_for_storage = {
       key_opts = [
@@ -32,15 +31,11 @@ module "key_vault" {
       key_size = 2048
     }
   }
-
+  // This admin role assignment must be set for key creation
   role_assignments = {
     deployment_user_secrets = {
-      role_definition_id_or_name = "Key Vault Administrator"
       principal_id               = data.azurerm_client_config.current.object_id
-    }
-    customer_managed_key = {
-      role_definition_id_or_name = "Key Vault Crypto Officer"
-      principal_id               = module.user_assigned_identity_for_storage.principal_id
+      role_definition_id_or_name = "Key Vault Administrator"
     }
   }
 }

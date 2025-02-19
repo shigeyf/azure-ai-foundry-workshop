@@ -1,6 +1,16 @@
 # tflint-ignore: terraform_required_version
 
-// modules/*/main.tf
+// main.tf
+
+terraform {
+  required_version = "~> 1.7"
+  required_providers {
+    azapi = {
+      source = "Azure/azapi"
+      version = "~> 2.0"
+    }
+  }
+}
 
 # tflint-ignore: terraform_required_providers, terraform_module_version
 module "rg" {

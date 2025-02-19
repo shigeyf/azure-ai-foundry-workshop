@@ -1,4 +1,4 @@
-//
+// avm.storage_account.tf
 
 module "storage_account" {
   source  = "Azure/avm-res-storage-storageaccount/azurerm"
@@ -21,11 +21,11 @@ module "storage_account" {
   sftp_enabled              = false
   shared_access_key_enabled = false
 
+  // Advanced properties
   managed_identities = {
-    system_assigned            = true
+    system_assigned            = false
     user_assigned_resource_ids = [module.user_assigned_identity_for_storage.resource_id]
   }
-
   customer_managed_key = {
     key_vault_resource_id = module.key_vault.resource_id
     key_name              = local.cmk_name_for_storage
@@ -33,4 +33,11 @@ module "storage_account" {
       resource_id = module.user_assigned_identity_for_storage.resource_id
     }
   }
+
+  // Depends on
+  depends_on = [
+    module.user_assigned_identity_for_storage,
+    module.key_vault,
+    module.role_assignments_for_key_vault_cmk_for_storage,
+  ]
 }
