@@ -5,6 +5,10 @@
 # TMP
 tmp/
 
+# Environment file
+.env
+.env.*
+
 # Node.js
 node_modules/
 
