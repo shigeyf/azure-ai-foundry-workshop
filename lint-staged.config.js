@@ -11,6 +11,8 @@
 // npm pkg set scripts.dartlint:lint-staged="dart fix --apply"
 // [/run]
 
+const path = require('path');
+
 /** @type {import("lint-staged").configObject} */
 const config = {
   // Formatting
@@ -27,7 +29,12 @@ const config = {
 
   // Linting
   // [Terraform]
-  '**/*.tf': (filenames) => `tflint --recursive')`
+  //'**/*.tf': (filenames) => `tflint --recursive`
+  '**/*.tf': (filenames) => {
+    const directories = filenames.map((filename) => path.dirname(filename));
+    const uniqueDirectories = [...new Set(directories)];
+    return uniqueDirectories.map((dir) => `tflint --recursive --chdir ${dir}`);
+  }
   // Uncomment if needed
   // [JS/TS/Vue]
   // '**/*.{js,jsx,ts,tsx,vue}': (filenames) => filenames.map((filename) => `npm run eslint:lint-staged '${filename}'`),
