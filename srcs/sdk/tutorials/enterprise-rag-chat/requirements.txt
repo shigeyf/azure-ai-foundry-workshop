@@ -1,0 +1,10 @@
+pandas
+python-dotenv
+opentelemetry-api
+azure-ai-projects
+azure-ai-inference[prompts]
+azure-ai-evaluation[remote]
+azure-identity
+azure-search-documents
+azure-monitor-opentelemetry
+marshmallow==3.23.2
