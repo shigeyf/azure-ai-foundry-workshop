@@ -1,0 +1,5 @@
+ipykernel
+python-dotenv
+azure-ai-projects
+azure-ai-inference
+azure-identity
