@@ -1,2 +1,2 @@
-AI_FOUNDRY_PROJECT_CONNECTION_STRING=<your-project-connection-string>
-AI_FOUNDRY_AI_MODEL_NAME=gpt-4o-mini
+PROJECT_CONNECTION_STRING=<your-project-connection-string>
+MODEL_NAME="gpt-4o-mini"
