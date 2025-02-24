@@ -43,9 +43,13 @@ search_client = SearchClient(
     credential=AzureKeyCredential(key=search_connection.key),
 )
 
+intent_mapping = Path(ASSET_PATH) / os.environ["INTENT_MAPPING_PROMPT"]
+
 
 @tracer.start_as_current_span(name="get_product_documents")
-def get_product_documents(messages: list, context: dict = None) -> dict:
+def get_product_documents(
+    messages: list, context: dict = None
+) -> dict:
     """Get product documents from the search index"""
     if context is None:
         context = {}
@@ -53,11 +57,9 @@ def get_product_documents(messages: list, context: dict = None) -> dict:
     overrides = context.get("overrides", {})
     top = overrides.get("top", 5)
 
+    # logger.info("Intent Mapping Prompty file = %s", intent_mapping)
     # generate a search query from the chat messages
-    # TODO:
-    intent_prompty = PromptTemplate.from_prompty(
-        Path(ASSET_PATH) / "intent_mapping.ja.prompty"
-    )
+    intent_prompty = PromptTemplate.from_prompty(intent_mapping)
 
     intent_mapping_response = chat.complete(
         model=os.environ["INTENT_MAPPING_MODEL"],
@@ -75,11 +77,15 @@ def get_product_documents(messages: list, context: dict = None) -> dict:
 
     # search the index for products matching the search query
     vector_query = VectorizedQuery(
-        vector=search_vector, k_nearest_neighbors=top, fields="contentVector")
+        vector=search_vector,
+        k_nearest_neighbors=top,
+        fields="contentVector",
+    )
 
     search_results = search_client.search(
-        search_text=search_query, vector_queries=[vector_query], select=[
-            "id", "content", "filepath", "title", "url"]
+        search_text=search_query,
+        vector_queries=[vector_query],
+        select=["id", "content", "filepath", "title", "url"],
     )
 
     documents = [
@@ -129,9 +135,8 @@ if __name__ == "__main__":
         help="Query to use to search product",
         default="I need a new tent for 4 people, what would you recommend?",
     )
-
     args = parser.parse_args()
-    query = args.query
 
     result = get_product_documents(
-        messages=[{"role": "user", "content": query}])
+        messages=[{"role": "user", "content": args.query}],
+    )

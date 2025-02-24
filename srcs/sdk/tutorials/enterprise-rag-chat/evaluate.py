@@ -1,6 +1,8 @@
 "evaluate.py"
 
 import os
+import time
+from pathlib import Path
 
 import pandas as pd
 from azure.ai.evaluation import GroundednessEvaluator, evaluate
@@ -9,6 +11,10 @@ from azure.ai.projects.models import ConnectionType
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
 from chat_with_products import chat_with_products
+from config import EVAL_PATH, get_logger
+
+# initialize logging and tracing objects
+logger = get_logger(__name__)
 
 # load environment variables from the .env file at the root of this repo
 load_dotenv('./.env', override=True)
@@ -29,13 +35,16 @@ evaluator_model = {
     "api_key": connection.key,
 }
 
+eval_data = Path(EVAL_PATH) / os.environ["EVALUATION_DATA"]
+
 groundedness = GroundednessEvaluator(evaluator_model)
 
 
 def evaluate_chat_with_products(query):
     """Evaluate the chat_with_products function with a query."""
     response = chat_with_products(
-        messages=[{"role": "user", "content": query}])
+        messages=[{"role": "user", "content": query}],
+    )
     return {
         "response": response["message"].content,
         "context": response["context"]["grounding_data"]
@@ -46,21 +55,19 @@ def evaluate_chat_with_products(query):
 if __name__ == "__main__":
     import contextlib
     import multiprocessing
-    from pathlib import Path
     # workaround for multiprocessing issue on linux
     from pprint import pprint
-
-    from config import EVAL_PATH
 
     with contextlib.suppress(RuntimeError):
         multiprocessing.set_start_method("spawn", force=True)
 
+    # logger.info("Evaluation data file = %s", eval_data)
+
     # run evaluation with a dataset and target function, log to the project
-    # TODO:
     result = evaluate(
-        data=Path(EVAL_PATH) / "chat_eval_data.ja.jsonl",
+        data=eval_data,
         target=evaluate_chat_with_products,
-        evaluation_name="evaluate_chat_with_products",
+        evaluation_name=f"evaluate_chat_with_products-{time.strftime("%Y%m%d%H%M%S")}",
         evaluators={
             "groundedness": groundedness,
         },

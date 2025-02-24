@@ -1,6 +1,7 @@
 "create_search_index.py"
 
 import os
+from pathlib import Path
 
 import pandas as pd
 from azure.ai.projects import AIProjectClient
@@ -15,7 +16,7 @@ from azure.search.documents.indexes.models import (
   SearchFieldDataType, SearchIndex, SemanticConfiguration, SemanticField,
   SemanticPrioritizedFields, SemanticSearch, SimpleField, VectorSearch,
   VectorSearchAlgorithmKind, VectorSearchAlgorithmMetric, VectorSearchProfile)
-from config import get_logger
+from config import ASSET_PATH, get_logger
 
 # initialize logging object
 logger = get_logger(__name__)
@@ -129,7 +130,8 @@ def create_index_definition(index_name: str, model: str) -> SearchIndex:
 
 
 def create_docs_from_csv(
-    path: str, content_column: str, model: str
+  use_product_info: bool,
+  path: str, content_column: str, model: str
 ) -> list[dict[str, any]]:
     """Creates documents from a CSV file,
       generating vector embeddings for the specified content column"""
@@ -138,6 +140,20 @@ def create_docs_from_csv(
     for product in products.to_dict("records"):
         content = product[content_column]
         pid = str(product["id"])
+
+        if use_product_info:
+            product_info_folder = os.environ["PRODUCT_INFO_FOLDER"]
+            product_info_file = f"product_info_{pid}.md"
+            product_file = (
+                Path(ASSET_PATH) / product_info_folder / product_info_file
+            )
+            try:
+                with open(product_file, "r", encoding="utf-8") as file:
+                    content = file.read()
+            # pylint: disable=broad-exception-caught
+            except Exception:
+                pass
+
         title = product["name"]
         url = f"/products/{title.lower().replace(' ', '-')}"
         emb = embeddings.embed(input=content, model=model)
@@ -154,7 +170,7 @@ def create_docs_from_csv(
     return items
 
 
-def create_index_from_csv(index_name, csv_file):
+def create_index_from_csv(index_name, csv_file, use_product_info):
     """Creates a search index from a CSV file,
       generating vector embeddings for the specified content column"""
     # If a search index already exists, delete it:
@@ -169,12 +185,14 @@ def create_index_from_csv(index_name, csv_file):
 
     # create an empty search index
     index_definition = create_index_definition(
-        index_name, model=os.environ["EMBEDDINGS_MODEL"])
+        index_name, model=os.environ["EMBEDDINGS_MODEL"]
+    )
     index_client.create_index(index_definition)
 
     # create documents from the products.csv file,
     # generating vector embeddings for the "description" column
     docs = create_docs_from_csv(
+        use_product_info=use_product_info,
         path=csv_file, content_column="description",
         model=os.environ["EMBEDDINGS_MODEL"]
     )
@@ -206,8 +224,12 @@ if __name__ == "__main__":
         help="path to data for creating search index",
         default="assets/products.csv"
     )
+    parser.add_argument(
+        "--use-product-info",
+        type=bool,
+        help="whether to use product info markdown files as contents",
+        default=False
+    )
     args = parser.parse_args()
-    arg_index_name = args.index_name
-    arg_csv_file = args.csv_file
 
-    create_index_from_csv(arg_index_name, arg_csv_file)
+    create_index_from_csv(args.index_name, args.csv_file, args.use_product_info)
