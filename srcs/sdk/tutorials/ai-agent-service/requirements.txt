@@ -1,0 +1,9 @@
+aiohttp
+python-dotenv
+azure-ai-projects
+azure-identity
+azure-ai-inference
+autogen-core
+autogen-agentchat
+autogen-ext[azure]
+autogen-ext[openai]

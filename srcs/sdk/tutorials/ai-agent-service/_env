@@ -1,0 +1,10 @@
+PROJECT_CONNECTION_STRING="<your-project-connection-string>"
+PROJECT_API_KEY="your-api-key"
+MODEL_NAME="gpt-4o"
+INFERENCE_ENDPOINT="<your-inference-endpoint-url>"
+BING_CONNECTION_STRING="<your-bing-connection-string>"
+
+# For Azure OpenAI Service
+AZURE_OPENAI_DEPLOYMENT_NAME="gpt-4o"
+AZURE_OPENAI_ENDPOINT="<your-inference-endpoint-url>"
+MODEL_API_VERSION="2025-01-01-preview"
