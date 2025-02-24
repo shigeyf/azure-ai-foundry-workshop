@@ -79,7 +79,7 @@ if __name__ == "__main__":
             }
         },
         azure_ai_project=project.scope,
-        output_path="./myevalresults.json",
+        output_path=f"./myevalresults-{time.strftime("%Y%m%d%H%M%S")}.json",
     )
 
     tabular_result = pd.DataFrame(result.get("rows"))
