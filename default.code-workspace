@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+      "name": "Project Root",
+			"path": "."
+		},
+		{
+      "name": "Quick Start - 00_basics",
+			"path": "srcs/sdk/quick-starts/00_basics"
+		},
+    {
+      "name": "Quick Start - 01_simple_inference_chat",
+      "path": "srcs/sdk/quick-starts/01_simple_inference_chat"
+    },
+    {
+      "name": "Quick Start - 02_simple_chat_with_prompt_template",
+      "path": "srcs/sdk/quick-starts/02_simple_chat_with_prompt_template"
+    },
+    {
+      "name": "Tutorials - Enterprise RAG Chat",
+      "path": "srcs/sdk/tutorials/enterprise-rag-chat"
+    },
+		{
+      "name": "Tutorials - AI Agent Service",
+			"path": "srcs/sdk/tutorials/ai-agent-service"
+		}
+	],
+	"settings": {}
+}
