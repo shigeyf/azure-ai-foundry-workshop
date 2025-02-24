@@ -1,19 +1,18 @@
 "config.py"
-# ruff: noqa: ANN201, ANN001
 
-import os
-import sys
-import pathlib
 import logging
-from azure.ai.projects import AIProjectClient
+import os
+import pathlib
+import sys
+
 from azure.ai.inference.tracing import AIInferenceInstrumentor
+from azure.ai.projects import AIProjectClient
 from azure.identity import DefaultAzureCredential
 from azure.monitor.opentelemetry import configure_azure_monitor
-
-# load environment variables from the .env file
 from dotenv import load_dotenv
 
-load_dotenv()
+# load environment variables from the .env file at the root of this repo
+load_dotenv('./.env', override=True)
 
 # Set "./assets" as the path where assets are stored,
 # resolving the absolute path:
@@ -45,7 +44,7 @@ def enable_telemetry(log_to_project: bool = False):
 
     if log_to_project:
         project = AIProjectClient.from_connection_string(
-            conn_str=os.environ["AIPROJECT_CONNECTION_STRING"],
+            conn_str=os.environ["PROJECT_CONNECTION_STRING"],
             credential=DefaultAzureCredential()
         )
 

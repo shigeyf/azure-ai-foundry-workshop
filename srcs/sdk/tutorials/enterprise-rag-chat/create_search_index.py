@@ -1,7 +1,7 @@
 "create_search_index.py"
-# ruff: noqa: ANN201, ANN001
 
 import os
+
 import pandas as pd
 from azure.ai.projects import AIProjectClient
 from azure.ai.projects.models import ConnectionType
@@ -10,13 +10,11 @@ from azure.identity import DefaultAzureCredential
 from azure.search.documents import SearchClient
 from azure.search.documents.indexes import SearchIndexClient
 from azure.search.documents.indexes.models import (
-    ExhaustiveKnnAlgorithmConfiguration, ExhaustiveKnnParameters,
-    HnswAlgorithmConfiguration, HnswParameters,
-    SearchableField, SearchField, SearchFieldDataType,
-    SearchIndex, SemanticConfiguration, SemanticField,
-    SemanticPrioritizedFields, SemanticSearch, SimpleField,
-    VectorSearch, VectorSearchAlgorithmKind,
-    VectorSearchAlgorithmMetric, VectorSearchProfile)
+  ExhaustiveKnnAlgorithmConfiguration, ExhaustiveKnnParameters,
+  HnswAlgorithmConfiguration, HnswParameters, SearchableField, SearchField,
+  SearchFieldDataType, SearchIndex, SemanticConfiguration, SemanticField,
+  SemanticPrioritizedFields, SemanticSearch, SimpleField, VectorSearch,
+  VectorSearchAlgorithmKind, VectorSearchAlgorithmMetric, VectorSearchProfile)
 from config import get_logger
 
 # initialize logging object
@@ -24,7 +22,7 @@ logger = get_logger(__name__)
 
 # create a project client using environment variables loaded from the .env file
 project = AIProjectClient.from_connection_string(
-    conn_str=os.environ["AIPROJECT_CONNECTION_STRING"],
+    conn_str=os.environ["PROJECT_CONNECTION_STRING"],
     credential=DefaultAzureCredential()
 )
 
@@ -200,7 +198,7 @@ if __name__ == "__main__":
         "--index-name",
         type=str,
         help="index name to use when creating the AI Search index",
-        default=os.environ["AISEARCH_INDEX_NAME"],
+        default=os.environ["SEARCH_INDEX_NAME"],
     )
     parser.add_argument(
         "--csv-file",

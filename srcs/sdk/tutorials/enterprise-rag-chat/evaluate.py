@@ -1,22 +1,21 @@
 "evaluate.py"
-# ruff: noqa: ANN201, ANN001
 
 import os
+
 import pandas as pd
+from azure.ai.evaluation import GroundednessEvaluator, evaluate
 from azure.ai.projects import AIProjectClient
 from azure.ai.projects.models import ConnectionType
-from azure.ai.evaluation import evaluate, GroundednessEvaluator
 from azure.identity import DefaultAzureCredential
+from dotenv import load_dotenv
 from chat_with_products import chat_with_products
 
 # load environment variables from the .env file at the root of this repo
-from dotenv import load_dotenv
-
-load_dotenv()
+load_dotenv('./.env', override=True)
 
 # create a project client using environment variables loaded from the .env file
 project = AIProjectClient.from_connection_string(
-    conn_str=os.environ["AIPROJECT_CONNECTION_STRING"],
+    conn_str=os.environ["PROJECT_CONNECTION_STRING"],
     credential=DefaultAzureCredential()
 )
 
@@ -45,13 +44,13 @@ def evaluate_chat_with_products(query):
 
 # Evaluate must be called inside of __main__, not on import
 if __name__ == "__main__":
-    from config import EVAL_PATH
-
+    import contextlib
+    import multiprocessing
+    from pathlib import Path
     # workaround for multiprocessing issue on linux
     from pprint import pprint
-    from pathlib import Path
-    import multiprocessing
-    import contextlib
+
+    from config import EVAL_PATH
 
     with contextlib.suppress(RuntimeError):
         multiprocessing.set_start_method("spawn", force=True)

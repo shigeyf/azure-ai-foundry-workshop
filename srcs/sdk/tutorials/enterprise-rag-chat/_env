@@ -1,5 +1,5 @@
-AIPROJECT_CONNECTION_STRING=<your-project-connection-string>
-AISEARCH_INDEX_NAME="example-index"
+PROJECT_CONNECTION_STRING=<your-project-connection-string>
+SEARCH_INDEX_NAME="example-index"
 EMBEDDINGS_MODEL="text-embedding-ada-002"
 INTENT_MAPPING_MODEL="gpt-4o-mini"
 CHAT_MODEL="gpt-4o-mini"

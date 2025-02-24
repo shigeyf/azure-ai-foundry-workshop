@@ -1,8 +1,10 @@
-"get_product_documents.py"
-# ruff: noqa: ANN201, ANN001
+"""
+Get product documents from the search index.
+"""
 
 import os
 from pathlib import Path
+
 from azure.ai.inference.prompts import PromptTemplate
 from azure.ai.projects import AIProjectClient
 from azure.ai.projects.models import ConnectionType
@@ -10,8 +12,8 @@ from azure.core.credentials import AzureKeyCredential
 from azure.identity import DefaultAzureCredential
 from azure.search.documents import SearchClient
 from azure.search.documents.models import VectorizedQuery
-from config import ASSET_PATH, get_logger
 from opentelemetry import trace
+from config import ASSET_PATH, get_logger
 
 # initialize logging and tracing objects
 logger = get_logger(__name__)
@@ -19,7 +21,7 @@ tracer = trace.get_tracer(__name__)
 
 # create a project client using environment variables loaded from the .env file
 project = AIProjectClient.from_connection_string(
-    conn_str=os.environ["AIPROJECT_CONNECTION_STRING"],
+    conn_str=os.environ["PROJECT_CONNECTION_STRING"],
     credential=DefaultAzureCredential()
 )
 
@@ -36,7 +38,7 @@ search_connection = project.connections.get_default(
 # Create a search index client using the search connection
 # This client will be used to create and delete search indexes
 search_client = SearchClient(
-    index_name=os.environ["AISEARCH_INDEX_NAME"],
+    index_name=os.environ["SEARCH_INDEX_NAME"],
     endpoint=search_connection.endpoint_url,
     credential=AzureKeyCredential(key=search_connection.key),
 )
@@ -52,9 +54,10 @@ def get_product_documents(messages: list, context: dict = None) -> dict:
     top = overrides.get("top", 5)
 
     # generate a search query from the chat messages
+    # TODO:
     intent_prompty = PromptTemplate.from_prompty(
-        Path(ASSET_PATH) / "intent_mapping.ja.prompty")
-        # TODO:
+        Path(ASSET_PATH) / "intent_mapping.ja.prompty"
+    )
 
     intent_mapping_response = chat.complete(
         model=os.environ["INTENT_MAPPING_MODEL"],

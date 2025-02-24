@@ -1,15 +1,14 @@
 "chat_with_product.py"
-# ruff: noqa: ANN201, ANN001
 
 import os
 from pathlib import Path
-from opentelemetry import trace
-from azure.ai.projects import AIProjectClient
-from azure.ai.inference.prompts import PromptTemplate
-from azure.identity import DefaultAzureCredential
-from config import ASSET_PATH, get_logger, enable_telemetry
-from get_product_documents import get_product_documents
 
+from azure.ai.inference.prompts import PromptTemplate
+from azure.ai.projects import AIProjectClient
+from azure.identity import DefaultAzureCredential
+from opentelemetry import trace
+from config import ASSET_PATH, enable_telemetry, get_logger
+from get_product_documents import get_product_documents
 
 # initialize logging and tracing objects
 logger = get_logger(__name__)
@@ -17,7 +16,7 @@ tracer = trace.get_tracer(__name__)
 
 # create a project client using environment variables loaded from the .env file
 project = AIProjectClient.from_connection_string(
-    conn_str=os.environ["AIPROJECT_CONNECTION_STRING"],
+    conn_str=os.environ["PROJECT_CONNECTION_STRING"],
     credential=DefaultAzureCredential()
 )
 
@@ -34,9 +33,10 @@ def chat_with_products(messages: list, context: dict = None) -> dict:
     documents = get_product_documents(messages, context)
 
     # do a grounded chat call using the search results
+    # TODO:
     grounded_chat_prompt = PromptTemplate.from_prompty(
-        Path(ASSET_PATH) / "grounded_chat.ja.prompty")
-        #TODO:
+        Path(ASSET_PATH) / "grounded_chat.ja.prompty"
+    )
 
     system_message = grounded_chat_prompt.create_messages(
         documents=documents, context=context)
