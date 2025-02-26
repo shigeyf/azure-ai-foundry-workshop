@@ -6,6 +6,10 @@ from config import env_MODEL_NAME
 from project import bing_connection, project_client
 from tools.ai_agent_properties import AIAgentProperties
 from tools.base_agent_with_bing import base_agent_with_bing
+from messages_ja import (
+  news_analysis_tool_instructions,
+  news_analysis_tool_content,
+)
 
 
 # Agent Tool: News Analysis
@@ -20,13 +24,8 @@ async def news_analysis_tool_agent(stock_name: str) -> str:
         bing_connection: The Bing connection properties.
     """
     agent_name = "news_analysis_tool_agent"
-    instructions = (
-        f"Focus on the latest news highlights for stock {stock_name}."
-    )
-    content = (
-        f"Retrieve the latest news articles and summaries "
-        f"about {stock_name}."
-    )
+    instructions = news_analysis_tool_instructions.format(stock_name=stock_name)
+    content = news_analysis_tool_content.format(stock_name=stock_name)
     print(
         f"[{agent_name}] "
         f"Fetching news analysis for {stock_name}..."

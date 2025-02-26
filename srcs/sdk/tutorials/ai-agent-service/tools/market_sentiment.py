@@ -6,6 +6,10 @@ from config import env_MODEL_NAME
 from project import bing_connection, project_client
 from tools.ai_agent_properties import AIAgentProperties
 from tools.base_agent_with_bing import base_agent_with_bing
+from messages_ja import (
+  market_sentiment_tool_instructions,
+  market_sentiment_tool_content,
+)
 
 
 # Market Sentiment
@@ -19,14 +23,8 @@ async def market_sentiment_tool_agent(stock_name: str) -> str:
         bing_connection: The Bing connection properties.
     """
     agent_name = "market_sentiment_tool_agent"
-    instructions = (
-        f"Focus on analyzing general market sentiment "
-        f"regarding {stock_name}."
-    )
-    content = (
-        f"Gather market sentiment, user opinions, and overall feeling "
-        f"about {stock_name}."
-    )
+    instructions = market_sentiment_tool_instructions.format(stock_name=stock_name)
+    content = market_sentiment_tool_content.format(stock_name=stock_name)
     print(
         f"[{agent_name}] "
         f"Fetching market sentiment for {stock_name}..."

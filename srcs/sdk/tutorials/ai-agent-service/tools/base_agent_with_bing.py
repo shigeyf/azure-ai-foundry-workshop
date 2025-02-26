@@ -25,11 +25,11 @@ async def base_agent_with_bing(
         tools=bing.definitions,
         headers={"x-ms-enable-preview": "true"},
     )
-    print(f"[{agent_name}] Created agent, ID: {agent.id}")
+    # print(f"[{agent_name}] Created agent, ID: {agent.id}")
 
     # Create a new thread and send the user query
     thread = project_client.agents.create_thread()
-    print(f"[{agent_name}] Created thread, ID: {thread.id}")
+    # print(f"[{agent_name}] Created thread, ID: {thread.id}")
 
     # Create message to thread
     _message = project_client.agents.create_message(
@@ -37,7 +37,7 @@ async def base_agent_with_bing(
         role="user",
         content=agent_properties.content,
     )
-    print(f"[{agent_name}] Created message: {_message}")
+    # print(f"[{agent_name}] Created message: {_message}")
 
     # Process the run
     _run = project_client.agents.create_and_process_run(
@@ -52,10 +52,10 @@ async def base_agent_with_bing(
     messages = project_client.agents.list_messages(
         thread_id=thread.id
     )
-    print(
-        f"[{agent_name}] Messages: "
-        f"{messages["data"][0]["content"][0]["text"]["value"]}"
-    )
+    # print(
+    #    f"[{agent_name}] Messages: "
+    #    f"{messages["data"][0]["content"][0]["text"]["value"]}"
+    #)
 
     # Clean up - Delete the assistant when done
     project_client.agents.delete_agent(agent.id)

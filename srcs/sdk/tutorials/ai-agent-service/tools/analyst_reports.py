@@ -6,6 +6,10 @@ from config import env_MODEL_NAME
 from project import bing_connection, project_client
 from tools.ai_agent_properties import AIAgentProperties
 from tools.base_agent_with_bing import base_agent_with_bing
+from messages_ja import (
+  analysis_report_tool_instructions,
+  analysis_report_tool_content,
+)
 
 
 # Analyst Reports
@@ -19,14 +23,8 @@ async def analyst_reports_tool_agent(stock_name: str) -> str:
         bing_connection: The Bing connection properties.
     """
     agent_name = "analyst_reports_tool_agent"
-    instructions = (
-        f"Focus on any relevant analyst reports "
-        f"or professional analysis about {stock_name}."
-    )
-    content = (
-        f"Find recent analyst reports, price targets, "
-        f"or professional opinions on {stock_name}."
-    )
+    instructions = analysis_report_tool_instructions.format(stock_name=stock_name)
+    content = analysis_report_tool_content.format(stock_name=stock_name)
     print(
         f"[{agent_name}] "
         f"Fetching analyst reports for {stock_name}..."

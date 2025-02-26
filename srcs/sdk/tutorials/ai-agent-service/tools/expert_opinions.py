@@ -6,6 +6,10 @@ from config import env_MODEL_NAME
 from project import bing_connection, project_client
 from tools.ai_agent_properties import AIAgentProperties
 from tools.base_agent_with_bing import base_agent_with_bing
+from messages_ja import (
+  expert_opinions_tool_instructions,
+  expert_opinions_tool_content,
+)
 
 
 # Expert Opinions
@@ -19,13 +23,8 @@ async def expert_opinions_tool_agent(stock_name: str) -> str:
         bing_connection: The Bing connection properties.
     """
     agent_name = "expert_opinions_tool_agent"
-    instructions = (
-        f"Focus on industry expert or thought leader opinions "
-        f"regarding {stock_name}."
-    )
-    content = (
-        f"Collect expert opinions or quotes about {stock_name}."
-    )
+    instructions = expert_opinions_tool_instructions.format(stock_name=stock_name)
+    content = expert_opinions_tool_content.format(stock_name=stock_name)
     print(
         f"[{agent_name}] "
         f"Fetching expert opinions for {stock_name}..."

@@ -8,6 +8,7 @@ from project import inference_model_client
 from tools.analyst_reports import analyst_reports_tool_agent
 from tools.expert_opinions import expert_opinions_tool_agent
 from tools.market_sentiment import market_sentiment_tool_agent
+from messages_ja import stock_sentiment_system_message
 
 stock_sentiment_agent_assistant = AssistantAgent(
     name="stock_sentiment_agent",
@@ -17,10 +18,5 @@ stock_sentiment_agent_assistant = AssistantAgent(
         analyst_reports_tool_agent,
         expert_opinions_tool_agent,
     ],
-    system_message=(
-        "You are the Market Sentiment Agent. "
-        "You gather overall market sentiment, "
-        "relevant analyst reports, and expert opinions. "
-        "Do NOT provide any final investment decision."
-    )
+    system_message=stock_sentiment_system_message,
 )

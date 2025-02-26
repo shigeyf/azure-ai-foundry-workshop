@@ -6,7 +6,10 @@ from config import env_MODEL_NAME
 from project import bing_connection, project_client
 from tools.ai_agent_properties import AIAgentProperties
 from tools.base_agent_with_bing import base_agent_with_bing
-
+from messages_ja import (
+  stock_price_trends_tool_instructions,
+  stock_price_trends_tool_content,
+)
 
 # Agent Tool: Stock Price Trends
 async def stock_price_trends_tool_agent(stock_name: str) -> str:
@@ -20,14 +23,8 @@ async def stock_price_trends_tool_agent(stock_name: str) -> str:
         bing_connection: The Bing connection properties.
     """
     agent_name = "stock_price_trends_tool_agent"
-    instructions = (
-        f"Focus on retrieving real-time stock prices, "
-        f"changes over the last few months, "
-        f"and summerize market trends for {stock_name}."
-    )
-    content = (
-        f"Please get stock price trends data for {stock_name}."
-    )
+    instructions = stock_price_trends_tool_instructions.format(stock_name=stock_name)
+    content = stock_price_trends_tool_content.format(stock_name=stock_name)
     print(
         f"[{agent_name}] "
         f"Fetching stock price trends for {stock_name}..."
