@@ -1,0 +1,4 @@
+PROJECT_CONNECTION_STRING=<your-project-connection-string>
+MODEL_NAME="gpt-4o-mini"
+EMBEDDINGS_MODEL_NAME="text-embedding-ada-002"
+SEARCH_INDEX_NAME="quick-start-product-index"
