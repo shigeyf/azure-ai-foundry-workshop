@@ -5,3 +5,4 @@ azure-ai-inference
 azure-identity
 azure-core-tracing-opentelemetry
 azure-monitor-opentelemetry
+opentelemetry-sdk
