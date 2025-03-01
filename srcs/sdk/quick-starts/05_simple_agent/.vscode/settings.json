@@ -1,0 +1,26 @@
+{
+  "python.envFile": "${workspaceFolder}/.env",
+  "python.analysis.extraPaths": ["${workspaceFolder}/.venv/Lib/site-packages"],
+  "python.analysis.completeFunctionParens": true,
+  "python.analysis.diagnosticMode": "workspace",
+  // Editor
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false,
+    "editor.formatOnType": false,
+    "editor.defaultFormatter": "ms-python.black-formatter"
+    //"editor.defaultFormatter": "ms-python.autopep8",
+  },
+  // Formatter
+  "black-formatter.args": ["--indent-size=4", "--line-length=90", "--skip-string-normalization"],
+  "autopep8.args": ["--indent-size=4", "--max-line-length=90"],
+  // Linter
+  "pylint.enabled": true,
+  "pylint.args": ["--max-line-length=90"],
+  "pylint.ignorePatterns": ["**/site-packages/**/*.py", "**/.vscode/*.py", "**/_env"],
+  "flake8.enabled": true,
+  "flake8.args": ["--max-line-length=90"],
+  "flake8.ignorePatterns": ["**/site-packages/**/*.py", "**/.vscode/*.py", "**/_env"]
+}

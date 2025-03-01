@@ -1,0 +1,2 @@
+PROJECT_CONNECTION_STRING=<your-project-connection-string>
+MODEL_NAME="gpt-4o"
