@@ -13,7 +13,7 @@ from azure.identity import DefaultAzureCredential
 from azure.search.documents import SearchClient
 from azure.search.documents.models import VectorizedQuery
 from opentelemetry import trace
-from config import ASSET_PATH, get_logger
+from config import ASSET_PATH, enable_telemetry, get_logger
 
 # initialize logging and tracing objects
 logger = get_logger(__name__)
@@ -135,7 +135,15 @@ if __name__ == "__main__":
         help="Query to use to search product",
         default="I need a new tent for 4 people, what would you recommend?",
     )
+    parser.add_argument(
+        "--enable-telemetry",
+        action="store_true",
+        help="Enable sending telemetry back to the project",
+    )
     args = parser.parse_args()
+    if args.enable_telemetry:
+        enable_telemetry(True)
+
 
     result = get_product_documents(
         messages=[{"role": "user", "content": args.query}],
