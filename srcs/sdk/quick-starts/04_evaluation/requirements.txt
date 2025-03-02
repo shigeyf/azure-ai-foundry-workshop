@@ -1,0 +1,11 @@
+ipykernel
+python-dotenv
+azure-ai-projects
+azure-ai-inference
+azure-ai-evaluation[remote]
+azure-identity
+azure-core-tracing-opentelemetry
+azure-monitor-opentelemetry
+opentelemetry-sdk
+marshmallow==3.23.2
+# workaround for a bug in PromptFlow https://github.com/microsoft/promptflow/issues/3902
