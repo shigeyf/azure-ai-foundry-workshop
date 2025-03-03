@@ -17,6 +17,18 @@
       "path": "srcs/sdk/quick-starts/02_simple_chat_with_prompt_template"
     },
     {
+      "name": "Quick Start - 03_rag_chat",
+      "path": "srcs/sdk/quick-starts/03_rag_chat"
+    },
+    {
+      "name": "Quick Start - 04_evaluation",
+      "path": "srcs/sdk/quick-starts/04_evaluation"
+    },
+    {
+      "name": "Quick Start - 05_simple_agent",
+      "path": "srcs/sdk/quick-starts/05_simple_agent"
+    },
+    {
       "name": "Tutorials - Enterprise RAG Chat",
       "path": "srcs/sdk/tutorials/enterprise-rag-chat"
     },
