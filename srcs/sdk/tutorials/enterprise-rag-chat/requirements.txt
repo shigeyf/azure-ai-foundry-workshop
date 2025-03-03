@@ -1,6 +1,6 @@
 pandas
 python-dotenv
-opentelemetry-api
+opentelemetry-sdk
 azure-ai-projects
 azure-ai-inference[prompts]
 azure-ai-evaluation[remote]
