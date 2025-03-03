@@ -6,8 +6,10 @@ This example uses the Azure AI Agent Service and the Bing Grounding Tool.
 from azure.ai.projects import AIProjectClient
 from azure.ai.projects.models import BingGroundingTool, ConnectionProperties
 from tools.ai_agent_properties import AIAgentProperties
+from project import tracer
 
 
+@tracer.start_as_current_span("tutorials: ai-agent-service[base_agent_with_bing]")
 async def base_agent_with_bing(
     project_client: AIProjectClient,
     model_name: str,

@@ -1,5 +1,7 @@
 aiohttp
 python-dotenv
+opentelemetry-sdk
+azure-monitor-opentelemetry
 azure-ai-projects
 azure-identity
 azure-ai-inference
