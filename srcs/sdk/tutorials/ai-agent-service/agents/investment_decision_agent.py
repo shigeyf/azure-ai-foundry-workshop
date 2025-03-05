@@ -9,7 +9,7 @@ from project import tracer
 
 
 # Assistant Agent: Investment Decision
-with tracer.start_as_current_span("investment_decision_agent"):
+with tracer.start_as_current_span("tutorials: ai-agent-service[investment_decision_agent]"):
   investment_decision_agent_assistant = AssistantAgent(
       name="investment_decision_agent",
       model_client=inference_model_client,

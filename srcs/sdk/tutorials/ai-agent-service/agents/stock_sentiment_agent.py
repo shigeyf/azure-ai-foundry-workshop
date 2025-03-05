@@ -13,7 +13,7 @@ from project import tracer
 
 
 # Assistant Agent: Stock Sentiment
-with tracer.start_as_current_span("stock_sentiment_agent"):
+with tracer.start_as_current_span("tutorials: ai-agent-service[stock_sentiment_agent]"):
   stock_sentiment_agent_assistant = AssistantAgent(
       name="stock_sentiment_agent",
       model_client=inference_model_client,

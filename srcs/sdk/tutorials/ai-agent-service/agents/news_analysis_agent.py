@@ -11,7 +11,7 @@ from project import tracer
 
 
 # Assistant Agent: News Analysis
-with tracer.start_as_current_span("news_analysis_agent"):
+with tracer.start_as_current_span("tutorials: ai-agent-service[news_analysis_agent]"):
   news_analysis_agent_assistant = AssistantAgent(
       name="stock_news_analysis_agent_assistant",
       model_client=inference_model_client,

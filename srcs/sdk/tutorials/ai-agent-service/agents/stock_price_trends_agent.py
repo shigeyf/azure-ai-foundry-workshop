@@ -11,7 +11,7 @@ from project import tracer
 
 
 # Assistant Agent: Stock Price Trends
-with tracer.start_as_current_span("stock_price_trends_agent"):
+with tracer.start_as_current_span("tutorials: ai-agent-service[stock_price_trends_agent]"):
   stock_price_trends_agent_assistant = AssistantAgent(
       name="stock_price_trends_agent",
       model_client=inference_model_client,
