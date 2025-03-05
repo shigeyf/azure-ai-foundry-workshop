@@ -11,6 +11,7 @@ from autogen_ext.models.azure import AzureAIChatCompletionClient
 from autogen_ext.models.openai import AzureOpenAIChatCompletionClient
 from azure.ai.inference.tracing import AIInferenceInstrumentor
 from azure.ai.projects import AIProjectClient
+from azure.ai.projects.telemetry.agents import AIAgentsInstrumentor
 from azure.core.credentials import AzureKeyCredential
 from azure.core.settings import settings
 from azure.identity import DefaultAzureCredential
@@ -78,11 +79,12 @@ bing_connection = project_client.connections.get(
 # Enable Azure SDK tracing with either of two lines:
 os.environ["AZURE_SDK_TRACING_IMPLEMENTATION"] = "opentelemetry"
 settings.tracing_implementation = "opentelemetry"
+# Enable logging message contents
+os.environ["AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED"] = "true"
 
 # Enable tracing
 AIInferenceInstrumentor().instrument()
-# Enable logging message contents
-os.environ["AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED"] = "true"
+AIAgentsInstrumentor().instrument()
 
 application_insights_connection_string = project_client.telemetry.get_connection_string()
 if not application_insights_connection_string:
