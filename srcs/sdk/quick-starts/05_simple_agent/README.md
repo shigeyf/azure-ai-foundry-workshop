@@ -1,5 +1,7 @@
 # Quick Start 5: Developing a Simple AI Agent Application with Azure AI Foundry
 
+[English](./README.md) | [日本語](./README.ja.md)
+
 In this note, we will explain how to develop an inference chat application using an AI agent with the Azure AI Foundry SDK.
 
 Azure AI Foundry provides a platform called Azure AI Agent Service to run agents. Azure AI Agent Service is a fully managed service designed to build, deploy, and scale high-quality, scalable AI agents securely without developers needing to manage the computing and storage resources required to run the agents.
