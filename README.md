@@ -1,6 +1,10 @@
 # Azure AI Foundry Workshop: From Beginner to Intermediate
 
+[English](./README.md) | [日本語](./README.ja.md)
+
 This repository contains learning materials for developing and building your own AI applications on Azure using the Azure AI Foundry service.
+
+Please open VSCode workspace [`default`](./default.code-workspace) file when you will learn on your local computer.
 
 Please refer to the following contents:
 

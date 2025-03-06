@@ -1,5 +1,7 @@
 # チュートリアル: Azure AI Agent Service と AutoGen を組み合わせてカスタムエージェントアプリを構築する
 
+[English](./README.md) | [日本語](./README.ja.md)
+
 このチュートリアルでは、Azure AI Agent Service と AutoGen を使用してカスタムエージェントアプリを構築する方法を学びます。Azure AI Agent Service は、AI モデルを簡単にデプロイし、管理するためのサービスであり、AutoGen は自動生成されたコードを使用して迅速にアプリケーションを開発するためのツールです。この組み合わせにより、複雑な AI アプリケーションを効率的に構築することができます。
 
 このサンプルでコードでは、Azure AI Agent Service と AutoGen を組み合わせて、カスタムエージェントアプリを作成して、実際のユースケースに適用する方法を学びます。このチュートリアルを通じて、Azure AI Agent Service と AutoGen を活用した効率的な AI アプリケーション開発の手法を習得することができます。

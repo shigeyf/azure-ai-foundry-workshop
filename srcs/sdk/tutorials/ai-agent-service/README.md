@@ -1,5 +1,7 @@
 # Tutorial: Build a custom Agent app with a combination of Azure AI Agent Service and AutoGen
 
+[English](./README.md) | [日本語](./README.ja.md)
+
 In this tutorial, you will learn how to build a custom agent app using Azure AI Agent Service and AutoGen. Azure AI Agent Service is a service for easily deploying and managing AI models, and AutoGen is a tool for quickly developing applications using auto-generated code. This combination allows you to efficiently build complex AI applications.
 
 In this sample code, you will learn how to create a custom agent app by combining Azure AI Agent Service and AutoGen and apply it to real use cases. Through this tutorial, you will acquire efficient AI application development techniques using Azure AI Agent Service and AutoGen.

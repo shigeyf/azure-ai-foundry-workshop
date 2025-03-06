@@ -1,6 +1,10 @@
 # Azure AI Foundry ワークショップ: 初心者から中級者に向けて
 
+[English](./README.md) | [日本語](./README.ja.md)
+
 このリポジトリには、Azure AI Foundry サービスを活用して、Azure 上で独自の AI アプリケーションを開発および構築するための学習資料が含まれています。
+
+ローカルコンピュータで学習する際は、VSCode ワークスペースファイル [`default`](./default.code-workspace) を開いてください。
 
 以下の内容を参照してください：
 
