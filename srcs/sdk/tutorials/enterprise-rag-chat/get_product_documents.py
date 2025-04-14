@@ -13,11 +13,13 @@ from azure.identity import DefaultAzureCredential
 from azure.search.documents import SearchClient
 from azure.search.documents.models import VectorizedQuery
 from opentelemetry import trace
-from config import ASSET_PATH, enable_telemetry, get_logger
+
+from config import ASSET_PATH
+from config import get_logger
+from config import enable_telemetry, tracer, tracer_scenario
 
 # initialize logging and tracing objects
 logger = get_logger(__name__)
-tracer = trace.get_tracer(__name__)
 
 # create a project client using environment variables loaded from the .env file
 project = AIProjectClient.from_connection_string(
@@ -46,7 +48,7 @@ search_client = SearchClient(
 intent_mapping = Path(ASSET_PATH) / os.environ["INTENT_MAPPING_PROMPT"]
 
 
-@tracer.start_as_current_span(name="get_product_documents")
+# @tracer.start_as_current_span(name="get_product_documents")
 def get_product_documents(
     messages: list, context: dict = None
 ) -> dict:
@@ -144,7 +146,11 @@ if __name__ == "__main__":
     if args.enable_telemetry:
         enable_telemetry(True)
 
-
-    result = get_product_documents(
-        messages=[{"role": "user", "content": args.query}],
-    )
+    with tracer.start_as_current_span(tracer_scenario) as top_span:
+        with tracer.start_as_current_span(
+          "get_product_documents",
+          context=trace.set_span_in_context(top_span)
+        ) as span:
+            result = get_product_documents(
+                messages=[{"role": "user", "content": args.query}],
+            )

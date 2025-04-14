@@ -10,8 +10,12 @@ from azure.ai.projects import AIProjectClient
 from azure.ai.projects.models import ConnectionType
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
+from opentelemetry import trace
+
 from chat_with_products import chat_with_products
-from config import EVAL_PATH, get_logger
+from config import EVAL_PATH
+from config import get_logger
+from config import enable_telemetry, tracer, tracer_scenario
 
 # initialize logging and tracing objects
 logger = get_logger(__name__)
@@ -57,35 +61,53 @@ if __name__ == "__main__":
     import multiprocessing
     # workaround for multiprocessing issue on linux
     from pprint import pprint
+    import argparse
+
+    # load command line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--enable-telemetry",
+        action="store_true",
+        help="Enable sending telemetry back to the project",
+    )
+    args = parser.parse_args()
+    if args.enable_telemetry:
+        # Enable telemetry
+        enable_telemetry(True)
 
     with contextlib.suppress(RuntimeError):
         multiprocessing.set_start_method("spawn", force=True)
 
     # logger.info("Evaluation data file = %s", eval_data)
 
-    # run evaluation with a dataset and target function, log to the project
-    result = evaluate(
-        data=eval_data,
-        target=evaluate_chat_with_products,
-        evaluation_name=f"evaluate_chat_with_products-{time.strftime("%Y%m%d%H%M%S")}",
-        evaluators={
-            "groundedness": groundedness,
-        },
-        evaluator_config={
-            "default": {
-                "query": {"${data.query}"},
-                "response": {"${target.response}"},
-                "context": {"${target.context}"},
-            }
-        },
-        azure_ai_project=project.scope,
-        output_path=f"./myevalresults-{time.strftime("%Y%m%d%H%M%S")}.json",
-    )
+    with tracer.start_as_current_span(tracer_scenario) as top_span:
+        with tracer.start_as_current_span(
+          "get_product_documents",
+          context=trace.set_span_in_context(top_span)
+        ) as span:
+            # run evaluation with a dataset and target function, log to the project
+            result = evaluate(
+                data=eval_data,
+                target=evaluate_chat_with_products,
+                evaluation_name=f"evaluate_chat_with_products-{time.strftime("%Y%m%d%H%M%S")}",
+                evaluators={
+                    "groundedness": groundedness,
+                },
+                evaluator_config={
+                    "default": {
+                        "query": {"${data.query}"},
+                        "response": {"${target.response}"},
+                        "context": {"${target.context}"},
+                    }
+                },
+                azure_ai_project=project.scope,
+                output_path=f"./myevalresults-{time.strftime("%Y%m%d%H%M%S")}.json",
+            )
 
-    tabular_result = pd.DataFrame(result.get("rows"))
+            tabular_result = pd.DataFrame(result.get("rows"))
 
-    pprint("-----Summarized Metrics-----")
-    pprint(result["metrics"])
-    pprint("-----Tabular Result-----")
-    pprint(tabular_result)
-    pprint(f"View evaluation results in AI Studio: {result['studio_url']}")
+            pprint("-----Summarized Metrics-----")
+            pprint(result["metrics"])
+            pprint("-----Tabular Result-----")
+            pprint(tabular_result)
+            pprint(f"View evaluation results in AI Studio: {result['studio_url']}")

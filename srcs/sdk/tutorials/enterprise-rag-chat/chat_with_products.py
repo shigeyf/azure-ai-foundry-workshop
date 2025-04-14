@@ -7,12 +7,14 @@ from azure.ai.inference.prompts import PromptTemplate
 from azure.ai.projects import AIProjectClient
 from azure.identity import DefaultAzureCredential
 from opentelemetry import trace
-from config import ASSET_PATH, enable_telemetry, get_logger
+
+from config import ASSET_PATH
+from config import get_logger
+from config import enable_telemetry, tracer, tracer_scenario
 from get_product_documents import get_product_documents, intent_mapping
 
 # initialize logging and tracing objects
 logger = get_logger(__name__)
-tracer = trace.get_tracer(__name__)
 
 # create a project client using environment variables loaded from the .env file
 project = AIProjectClient.from_connection_string(
@@ -26,7 +28,7 @@ chat = project.inference.get_chat_completions_client()
 grounded_chat = Path(ASSET_PATH) / os.environ["GROUNDED_CHAT_PROMPT"]
 
 
-@tracer.start_as_current_span(name="chat_with_products")
+# @tracer.start_as_current_span(name="chat_with_products")
 def chat_with_products(
     messages: list,
     context: dict = None
@@ -90,7 +92,12 @@ if __name__ == "__main__":
     if args.enable_telemetry:
         enable_telemetry(True)
 
-    # run chat with products
-    res = chat_with_products(
-        messages=[{"role": "user", "content": args.query}],
-    )
+    with tracer.start_as_current_span(tracer_scenario) as top_span:
+        with tracer.start_as_current_span(
+          "chat_with_products",
+          context=trace.set_span_in_context(top_span)
+        ) as span:
+            # run chat with products
+            res = chat_with_products(
+                messages=[{"role": "user", "content": args.query}],
+            )

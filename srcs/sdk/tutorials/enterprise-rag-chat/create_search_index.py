@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 
 import pandas as pd
+from opentelemetry import trace
 from azure.ai.projects import AIProjectClient
 from azure.ai.projects.models import ConnectionType
 from azure.core.credentials import AzureKeyCredential
@@ -16,7 +17,10 @@ from azure.search.documents.indexes.models import (
   SearchFieldDataType, SearchIndex, SemanticConfiguration, SemanticField,
   SemanticPrioritizedFields, SemanticSearch, SimpleField, VectorSearch,
   VectorSearchAlgorithmKind, VectorSearchAlgorithmMetric, VectorSearchProfile)
-from config import ASSET_PATH, get_logger
+
+from config import ASSET_PATH
+from config import get_logger
+from config import enable_telemetry, tracer, tracer_scenario
 
 # initialize logging object
 logger = get_logger(__name__)
@@ -39,8 +43,8 @@ search_connection = project.connections.get_default(
 # Create a search index client using the search connection
 # This client will be used to create and delete search indexes
 index_client = SearchIndexClient(
-    endpoint=search_connection.endpoint_url, credential=AzureKeyCredential(
-        key=search_connection.key)
+    endpoint=search_connection.endpoint_url,
+    credential=AzureKeyCredential(key=search_connection.key)
 )
 
 
@@ -230,6 +234,18 @@ if __name__ == "__main__":
         help="whether to use product info markdown files as contents",
         default=False
     )
+    parser.add_argument(
+        "--enable-telemetry",
+        action="store_true",
+        help="Enable sending telemetry back to the project",
+    )
     args = parser.parse_args()
+    if args.enable_telemetry:
+        enable_telemetry(True)
 
-    create_index_from_csv(args.index_name, args.csv_file, args.use_product_info)
+    with tracer.start_as_current_span(tracer_scenario) as top_span:
+        with tracer.start_as_current_span(
+          "create_index_from_csv",
+          context=trace.set_span_in_context(top_span)
+        ) as span:
+            create_index_from_csv(args.index_name, args.csv_file, args.use_product_info)
