@@ -12,7 +12,7 @@
 
 ### Terraform
 
-`deployments/terraform` フォルダーには、Azure AI Foundry リソースをデプロイするための Terraform スクリプトが含まれています。このフォルダー内の [README (日本語)](./deployments/terraform/README.ja.md) を参照して、デプロイメントの詳細な手順を確認してください。
+`deployments/terraform` フォルダーには、Azure AI Foundry リソースをデプロイするための Terraform スクリプトが含まれています。このフォルダー内の [README (日本語)](./infra/terraform/README.ja.md) を参照して、デプロイメントの詳細な手順を確認してください。
 
 ## SDK クイックスタート
 

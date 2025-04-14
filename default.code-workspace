@@ -38,7 +38,7 @@
 		},
     {
       "name": "IaC - Terraform",
-      "path": "deployments/terraform"
+      "path": "infra/terraform"
     }
   ],
   "settings": {

@@ -12,7 +12,7 @@ The workspace is organized into the following sections:
 
 ### Terraform
 
-The `deployments/terraform` folder contains Terraform scripts to deploy Azure AI Foundry resources. Refer to the [README](./deployments/terraform/README.md) in this folder for detailed instructions on deployment.
+The `deployments/terraform` folder contains Terraform scripts to deploy Azure AI Foundry resources. Refer to the [README](./infra/terraform/README.md) in this folder for detailed instructions on deployment.
 
 ## SDK Quick-Starts
 
