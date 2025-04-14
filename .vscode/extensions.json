@@ -1,17 +1,33 @@
 {
   "recommendations": [
     "esbenp.prettier-vscode",
+    "davidanson.vscode-markdownlint",
+    "github.codespaces",
+    "github.github-vscode-theme",
+    "github.vscode-github-actions",
+    "github.vscode-pull-request-github",
     "hashicorp.terraform",
+    "hediet.vscode-drawio",
+    "ms-azuretools.vscode-azure-github-copilot",
+    "ms-azuretools.vscode-azureresourcegroups",
     "ms-azuretools.vscode-azureterraform",
+    "ms-azuretools.vscode-bicep",
+    "ms-azuretools.vscode-docker",
     "azapi-vscode.azapi",
     "ms-python.autopep8",
     "ms-python.black-formatter",
+    "ms-python.debugpy",
     "ms-python.flake8",
     "ms-python.isort",
     "ms-python.pylint",
     "ms-python.python",
     "ms-python.vscode-pylance",
     "ms-toolsai.jupyter",
-    "redhat.vscode-yaml"
+    "ms-vscode.azurecli",
+    "ms-vscode-remote.remote-containers",
+    "redhat.vscode-yaml",
+    "stylelint.vscode-stylelint",
+    "teamsdevapp.vscode-ai-foundry",
+    "vscode-icons-team.vscode-icons"
   ]
 }
