@@ -5,8 +5,10 @@ This example uses the Azure AI Agent Service and the Bing Grounding Tool.
 
 import os
 import re
+import time
 
 from autogen_core.models import ModelFamily
+from autogen_core import SingleThreadedAgentRuntime
 from autogen_ext.models.azure import AzureAIChatCompletionClient
 from autogen_ext.models.openai import AzureOpenAIChatCompletionClient
 from azure.ai.inference.tracing import AIInferenceInstrumentor
@@ -17,12 +19,16 @@ from azure.core.settings import settings
 from azure.identity import DefaultAzureCredential
 from azure.monitor.opentelemetry import configure_azure_monitor
 from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
 from config import (env_AZURE_DEPLOYMENT_NAME, env_AZURE_ENDPOINT,
                     env_BING_CONNECTION_STRING, env_INFERENCE_ENDPOINT,
                     env_MODEL_API_VERSION, env_MODEL_NAME, env_PROJECT_API_KEY,
                     env_PROJECT_CONNECTION_STRING)
 
+tracer_scenario = f"Trace: tutorial-ai-agent-service-{time.time()}"
+#trace.set_tracer_provider(TracerProvider())
 tracer = trace.get_tracer(__name__)
+
 
 # Regex Mapping of Gen AI model name to AutoGen Core ModelFamily
 def get_model_family(model_name):
@@ -79,6 +85,7 @@ bing_connection = project_client.connections.get(
 # Enable Azure SDK tracing with either of two lines:
 os.environ["AZURE_SDK_TRACING_IMPLEMENTATION"] = "opentelemetry"
 settings.tracing_implementation = "opentelemetry"
+
 # Enable logging message contents
 os.environ["AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED"] = "true"
 

@@ -7,6 +7,8 @@ import asyncio
 from autogen_agentchat.ui import Console
 from agents.investment_team import investment_team
 from messages_ja import query
+from project import tracer, tracer_scenario
+from opentelemetry import trace
 
 
 async def main():
@@ -20,4 +22,5 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    with tracer.start_as_current_span(tracer_scenario) as root_span:
+        asyncio.run(main())

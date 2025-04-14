@@ -9,7 +9,7 @@ from tools.ai_agent_properties import AIAgentProperties
 from project import tracer
 
 
-@tracer.start_as_current_span("tutorials: ai-agent-service[base_agent_with_bing]")
+@tracer.start_as_current_span("base_agent_with_bing")
 async def base_agent_with_bing(
     project_client: AIProjectClient,
     model_name: str,
