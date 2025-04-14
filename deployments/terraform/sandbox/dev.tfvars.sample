@@ -1,0 +1,27 @@
+// dev.tfvars
+
+naming_suffix = ["ai", "sandbox", "dev"]
+
+tags = {
+  projectTag = "genai"
+  purposeTag = "sandbox"
+  envTag     = "dev"
+}
+
+location = "eastus2"
+
+enable_public_network_access = true
+
+storage_cmk_key_policy = {
+  key_type = "RSA"
+  key_size = 4096
+  rotation_policy = {
+    automatic = {
+      time_before_expiry = "P30D"
+    }
+    expire_after         = "P90D"
+    notify_before_expiry = "P29D"
+  }
+}
+
+ai_services_sku = "S0"
