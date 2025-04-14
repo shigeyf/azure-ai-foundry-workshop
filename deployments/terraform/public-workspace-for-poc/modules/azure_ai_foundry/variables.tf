@@ -52,9 +52,9 @@ variable "ai_service_name" {
 }
 
 variable "ai_service_sku" {
-    type        = string
-    description = "The sku name of the Azure Analysis Services server to create. Choose from: B1, B2, D1, S0, S1, S2, S3, S4, S8, S9. Some skus are region specific. See https://docs.microsoft.com/en-us/azure/analysis-services/analysis-services-overview#availability-by-region"
-    default     = "S0"
+  type        = string
+  description = "The sku name of the Azure Analysis Services server to create. Choose from: B1, B2, D1, S0, S1, S2, S3, S4, S8, S9. Some skus are region specific. See https://docs.microsoft.com/en-us/azure/analysis-services/analysis-services-overview#availability-by-region"
+  default     = "S0"
 }
 
 variable "ai_hub_name" {

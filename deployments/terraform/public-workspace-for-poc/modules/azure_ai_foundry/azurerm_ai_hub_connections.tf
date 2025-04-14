@@ -48,7 +48,8 @@ resource "azapi_resource" "AzureOpenAIServiceConnection" {
       }
     }
   }
-  response_export_values = ["*"]
+  schema_validation_enabled = false
+  response_export_values    = ["*"]
 
   depends_on = [
     azapi_resource.AIServicesResource,
