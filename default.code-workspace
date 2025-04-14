@@ -35,7 +35,13 @@
 		{
       "name": "Tutorials - AI Agent Service",
 			"path": "srcs/sdk/tutorials/ai-agent-service"
-		}
-	],
-	"settings": {}
+		},
+    {
+      "name": "IaC - Terraform",
+      "path": "deployments/terraform"
+    }
+  ],
+  "settings": {
+    "debug.internalConsoleOptions": "neverOpen"
+  }
 }
