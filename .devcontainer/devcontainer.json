@@ -1,0 +1,58 @@
+{
+  "name": "Default Codespaces",
+  "image": "mcr.microsoft.com/vscode/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/azure/azure-dev/azd:0": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/azure-cli:1": {
+      "installBicep": true
+    },
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "2"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3",
+      "installTools": true,
+      "toolsToInstall": "flake8,autopep8,black,pylint"
+    },
+    "ghcr.io/devcontainers/features/terraform:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "davidanson.vscode-markdownlint",
+        "github.codespaces",
+        "github.github-vscode-theme",
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github",
+        "hashicorp.terraform",
+        "hediet.vscode-drawio",
+        "ms-azuretools.vscode-azure-github-copilot",
+        "ms-azuretools.vscode-azureresourcegroups",
+        "ms-azuretools.vscode-azureterraform",
+        "ms-azuretools.vscode-bicep",
+        "ms-azuretools.vscode-docker",
+        "azapi-vscode.azapi",
+        "ms-python.autopep8",
+        "ms-python.black-formatter",
+        "ms-python.debugpy",
+        "ms-python.flake8",
+        "ms-python.isort",
+        "ms-python.pylint",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter",
+        "teamsdevapp.vscode-ai-foundry",
+        "ms-vscode.azurecli",
+        "stylelint.vscode-stylelint",
+        "vscode-icons-team.vscode-icons",
+        "redhat.vscode-yaml"
+      ]
+    }
+  }
+}
