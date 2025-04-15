@@ -1,5 +1,7 @@
 # Azure AI Foundry のインフラストラクチャコードによるデプロイ
 
+[English](./README.md) | [日本語](./README.ja.md)
+
 このフォルダーには、インフラストラクチャコード (IaC) ツールを使用して Azure AI Foundry 環境をデプロイするためのリソースとスクリプトが含まれています。
 
 ## Terraform を使ったデプロイ

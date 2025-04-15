@@ -1,5 +1,7 @@
 # Azure AI Foundry Deployment with Infrastructure as Code
 
+[English](./README.md) | [日本語](./README.ja.md)
+
 This folder contains resources and scripts for deploying Azure AI Foundry environments using Infrastructure as Code (IaC) tools.
 
 ## Terraform Deployment

@@ -1,5 +1,7 @@
 # Terraform を使用した Azure AI Foundry リソースのデプロイ
 
+[English](./README.md) | [日本語](./README.ja.md)
+
 このフォルダーには、Azure AI Foundry リソースをデプロイするための Terraform スクリプトが含まれています。Terraform は、宣言型構成言語を使用してインフラストラクチャを定義およびプロビジョニングすることを可能にするインフラストラクチャコード (IaC) ツールです。
 
 ## 前提条件

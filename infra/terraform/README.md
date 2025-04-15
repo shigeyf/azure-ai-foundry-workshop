@@ -1,5 +1,7 @@
 # Deploy Azure AI Foundry Resources with Terraform
 
+[English](./README.md) | [日本語](./README.ja.md)
+
 This folder contains Terraform scripts to deploy Azure AI Foundry resources. Terraform is an Infrastructure as Code (IaC) tool that allows you to define and provision infrastructure using a declarative configuration language.
 
 ## Prerequisites
