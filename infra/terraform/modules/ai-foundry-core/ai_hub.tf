@@ -11,16 +11,19 @@ resource "azurerm_ai_foundry" "this" {
   storage_account_id = module.core_storage.output.storage_id
   key_vault_id       = module.core_kv.output.keyvault_id
 
-  public_network_access = var.enable_public_network_access ? "Enabled" : "Disabled"
+  public_network_access        = var.enable_public_network_access ? "Enabled" : "Disabled"
+  high_business_impact_enabled = var.high_business_impact_enabled
 
   # application_insights_id        = azurerm_application_insights.this.id
   # container_registry_id          = azurerm_container_registry.this.id
   # primary_user_assigned_identity = null
-  # high_business_impact_enabled   = false
 
   # Enable system-assigned managed identity
   identity {
-    type = "SystemAssigned"
+    type = "SystemAssigned, UserAssigned"
+    identity_ids = [
+      azurerm_user_assigned_identity.this.id,
+    ]
   }
 
   # encryption {
