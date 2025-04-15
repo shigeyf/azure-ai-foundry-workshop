@@ -12,6 +12,11 @@ resource "azurerm_ai_services" "this" {
 
   # Enable system-assigned managed identity
   identity {
-    type = "SystemAssigned"
+    type         = var.enable_user_assigned_identity ? "SystemAssigned, UserAssigned" : "SystemAssigned"
+    identity_ids = var.enable_user_assigned_identity ? [azurerm_user_assigned_identity.ais[0].id] : null
   }
+
+  depends_on = [
+    azurerm_user_assigned_identity.ais,
+  ]
 }

@@ -23,7 +23,19 @@ variable "high_business_impact_enabled" {
   default     = false
 }
 
+variable "enable_user_assigned_identity" {
+  description = "Enable user-assigned identity"
+  type        = bool
+  default     = false
+}
+
 variable "ai_foundry_hub_uami_name" {
-  description = "User-assigned Managed Identity name for the Storage"
+  description = "User-assigned Managed Identity name for the AI Foundry Hub"
   type        = string
+  default     = null
+
+  validation {
+    condition     = !(var.enable_user_assigned_identity && var.ai_foundry_hub_uami_name == null)
+    error_message = "'ai_foundry_hub_uami_name' must be set if 'enable_user_assigned_identity' is enabled."
+  }
 }
