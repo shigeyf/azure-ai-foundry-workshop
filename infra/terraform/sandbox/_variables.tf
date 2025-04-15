@@ -21,6 +21,12 @@ variable "tags" {
   }
 }
 
+variable "enable_user_assigned_identity" {
+  description = "Enable user-assigned identity for the AI Foundry resources"
+  type        = bool
+  default     = false
+}
+
 variable "enable_public_network_access" {
   description = "Enable public network access for the AI Foundry resources"
   type        = bool
