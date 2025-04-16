@@ -23,8 +23,8 @@ variable "high_business_impact_enabled" {
   default     = false
 }
 
-variable "enable_user_assigned_identity" {
-  description = "Enable user-assigned identity"
+variable "enable_ai_foundry_hub_encryption" {
+  description = "Enable encryption for AI Foundry Hub"
   type        = bool
   default     = false
 }
@@ -38,4 +38,21 @@ variable "ai_foundry_hub_uami_name" {
     condition     = !(var.enable_user_assigned_identity && var.ai_foundry_hub_uami_name == null)
     error_message = "'ai_foundry_hub_uami_name' must be set if 'enable_user_assigned_identity' is enabled."
   }
+}
+
+variable "ai_foundry_hub_private_endpoint_name" {
+  description = "Private Endpoint name for the AI Foundry Hub"
+  type        = string
+  default     = null
+
+  validation {
+    condition     = !(!var.enable_public_network_access && var.ai_foundry_hub_private_endpoint_name == null)
+    error_message = "'ai_foundry_hub_private_endpoint_name' must be set if 'enable_public_network_access' is disabled."
+  }
+}
+
+variable "private_dns_zone_ids" {
+  type        = list(string)
+  description = "List of Private DNS Zone Id"
+  default     = []
 }

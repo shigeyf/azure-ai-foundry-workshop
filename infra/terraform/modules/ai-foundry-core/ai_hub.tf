@@ -14,9 +14,9 @@ resource "azurerm_ai_foundry" "this" {
   public_network_access        = var.enable_public_network_access ? "Enabled" : "Disabled"
   high_business_impact_enabled = var.high_business_impact_enabled
 
-  # application_insights_id        = azurerm_application_insights.this.id
   # container_registry_id          = azurerm_container_registry.this.id
-  # primary_user_assigned_identity = null
+  application_insights_id        = var.enable_app_insights ? azurerm_application_insights.this[0].id : null
+  primary_user_assigned_identity = var.enable_user_assigned_identity ? azurerm_user_assigned_identity.this[0].id : null
 
   # Enable system-assigned managed identity
   identity {
@@ -24,11 +24,14 @@ resource "azurerm_ai_foundry" "this" {
     identity_ids = var.enable_user_assigned_identity ? [azurerm_user_assigned_identity.this[0].id] : null
   }
 
-  # encryption {
-  #   key_id                    = null
-  #   key_vault_id              = null
-  #   user_assigned_identity_id = null
-  # }
+  dynamic "encryption" {
+    for_each = var.enable_ai_foundry_hub_encryption ? [1] : []
+    content {
+      key_id                    = module.core_ai_hub_cmkey[0].output.key_id
+      key_vault_id              = module.core_kv.output.keyvault_id
+      user_assigned_identity_id = var.enable_user_assigned_identity ? azurerm_user_assigned_identity.this[0].id : null
+    }
+  }
 
   # managed_network {
   #   isolation_mode = "Disabled"
@@ -43,4 +46,9 @@ resource "azurerm_ai_foundry" "this" {
       //tags["__SYSTEM__AzureOpenAI_${name}_aoai"], // A single static variable reference is required
     ]
   }
+
+  depends_on = [
+    azurerm_user_assigned_identity.this,
+    time_sleep.wait_for_ra_propagation,
+  ]
 }
