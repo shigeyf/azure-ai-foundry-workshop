@@ -1,12 +1,12 @@
 // _variables.storage_cmk.tf
 
 variable "storage_cmkey_name" {
-  description = "Storage account name"
+  description = "CMK name for Storage account"
   type        = string
 }
 
 variable "storage_cmkey_policy" {
-  description = "Key policy for the Storage Customer-managed Key"
+  description = "Key policy for the Storage CMK"
   type = object({
     key_type   = string
     key_size   = optional(number, 2048)
