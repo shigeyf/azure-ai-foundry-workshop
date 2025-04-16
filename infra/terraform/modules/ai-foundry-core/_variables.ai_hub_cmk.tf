@@ -3,6 +3,12 @@
 variable "ai_foundry_hub_cmkey_name" {
   description = "CMK name for AI Foundry Hub"
   type        = string
+  default     = null
+
+  validation {
+    condition     = !(var.enable_ai_foundry_hub_encryption && var.ai_foundry_hub_cmkey_name == null)
+    error_message = "'ai_foundry_hub_cmkey_name' must be set if 'enable_ai_foundry_hub_encryption' is enabled."
+  }
 }
 
 variable "ai_foundry_hub_cmkey_policy" {
@@ -21,4 +27,10 @@ variable "ai_foundry_hub_cmkey_policy" {
       notify_before_expiry = optional(string, "P29D")
     }))
   })
+  default = null
+
+  validation {
+    condition     = !(var.enable_ai_foundry_hub_encryption && var.ai_foundry_hub_cmkey_policy == null)
+    error_message = "'ai_foundry_hub_cmkey_policy' must be set if 'enable_ai_foundry_hub_encryption' is enabled."
+  }
 }
