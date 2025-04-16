@@ -9,6 +9,7 @@ output "output" {
     ai_foundry_hub_storage_id       = module.core_storage.output.storage_id
     ai_foundry_hub_storage_uami_id  = module.core_storage.output.storage_uai_id
     ai_foundry_hub_storage_cmk_name = module.core_storage_cmkey.output.key_name
+    ai_foundry_app_insights_id      = var.enable_app_insights ? azurerm_application_insights.this[0].id : null
   }
   description = "Core resources for AI Foundry"
 }
