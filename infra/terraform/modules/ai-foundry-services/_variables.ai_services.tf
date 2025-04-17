@@ -42,3 +42,8 @@ variable "ai_services_uami_name" {
     error_message = "'ai_services_uami_name' must be set if 'enable_user_assigned_identity' is enabled."
   }
 }
+
+variable "ai_foundry_hub_storage_id" {
+  description = "Storage Account Id for AI Foundry hub"
+  type        = string
+}
