@@ -44,8 +44,13 @@ module "ai_foundry_services" {
   ai_foundry_hub_keyvault_id  = module.ai_foundry_hub.output.ai_foundry_hub_keyvault_id
   ai_foundry_hub_storage_id   = module.ai_foundry_hub.output.ai_foundry_hub_storage_id
 
+  enable_ai_search = var.enable_ai_search
+  ai_search_name   = local.ai_search_name
+  ai_search_sku    = var.ai_search_sku
+
   enable_user_assigned_identity = var.enable_user_assigned_identity
   ai_services_uami_name         = local.ai_services_uami_name
+  ai_search_uami_name           = local.ai_search_uami_name
 
   enable_public_network_access = var.enable_public_network_access
 }

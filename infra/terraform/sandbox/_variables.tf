@@ -68,3 +68,15 @@ variable "ai_services_sku" {
   type        = string
   default     = "S0"
 }
+
+variable "enable_ai_search" {
+  description = "Enable AI Search for the AI Foundry resources"
+  type        = bool
+  default     = false
+}
+
+variable "ai_search_sku" {
+  description = "SKU for the AI Search resource"
+  type        = string
+  default     = "standard"
+}

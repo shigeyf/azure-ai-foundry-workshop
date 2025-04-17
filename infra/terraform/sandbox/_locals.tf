@@ -39,6 +39,8 @@ locals {
   ai_foundry_hub_uami_name     = "${module.naming.user_assigned_identity.name_unique}-hub"
   ai_services_name             = replace(module.naming.resource_group.name_unique, "/^rg-/", "ais-")
   ai_services_uami_name        = "${module.naming.user_assigned_identity.name_unique}-ais"
+  ai_search_name               = module.naming.search_service.name_unique
+  ai_search_uami_name          = "${module.naming.user_assigned_identity.name_unique}-${module.naming.search_service.slug}"
   ai_foundry_project_name      = replace(module.naming.resource_group.name_unique, "/^rg-/", "proj-")
   ai_foundry_project_uami_name = "${module.naming.user_assigned_identity.name_unique}-proj"
   app_insights_name            = "${module.naming.application_insights.name_unique}-hub"
