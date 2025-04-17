@@ -37,10 +37,23 @@ locals {
   storage_cmk_key_name         = "cmk-${local.storage_account_name}"
   ai_foundry_hub_name          = replace(module.naming.resource_group.name_unique, "/^rg-/", "hub-")
   ai_foundry_hub_uami_name     = "${module.naming.user_assigned_identity.name_unique}-hub"
-  ai_foundry_hub_cmk_key_name  = "cmk-${local.ai_foundry_hub_name}"
   ai_services_name             = replace(module.naming.resource_group.name_unique, "/^rg-/", "ais-")
   ai_services_uami_name        = "${module.naming.user_assigned_identity.name_unique}-ais"
   ai_foundry_project_name      = replace(module.naming.resource_group.name_unique, "/^rg-/", "proj-")
   ai_foundry_project_uami_name = "${module.naming.user_assigned_identity.name_unique}-proj"
   app_insights_name            = "${module.naming.application_insights.name_unique}-hub"
+}
+
+locals {
+  days_match      = regex("^P([0-9]+)D$", var.storage_cmk_key_policy.rotation_policy.expire_after)
+  days            = tonumber(local.days_match[0])
+  durations_hours = "${local.days * 24}h"
+  storage_cmk_key_policy = (
+    var.storage_cmk_key_policy.rotation_policy.expire_after != null && var.storage_cmk_key_policy.expiration_date == null
+    ? merge(
+      var.storage_cmk_key_policy,
+      { "expiration_date" : timeadd(timestamp(), local.durations_hours) },
+    )
+    : var.storage_cmk_key_policy
+  )
 }

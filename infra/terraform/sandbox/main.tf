@@ -15,17 +15,14 @@ module "ai_foundry_hub" {
   keyvault_name        = local.keyvault_name
   storage_account_name = local.storage_account_name
   storage_cmkey_name   = local.storage_cmk_key_name
-  storage_cmkey_policy = var.storage_cmk_key_policy
+  storage_cmkey_policy = local.storage_cmk_key_policy
   enable_app_insights  = var.enable_app_insights # whether to enable Application Insights
   app_insights_name    = local.app_insights_name # only if enable_app_insights = true
 
-  ai_foundry_hub_name              = local.ai_foundry_hub_name
-  ai_foundry_hub_description       = local.ai_foundry_hub_name
-  ai_foundry_hub_friendly_name     = local.ai_foundry_hub_name
-  high_business_impact_enabled     = var.enable_ai_foundry_hub_hbi        # whether to enable high business impact
-  enable_ai_foundry_hub_encryption = var.enable_ai_foundry_hub_encryption # whether to enable encryption for the AI Hub
-  ai_foundry_hub_cmkey_name        = local.ai_foundry_hub_cmk_key_name    # only if enable_ai_foundry_hub_encryption = true
-  ai_foundry_hub_cmkey_policy      = var.storage_cmk_key_policy           # only if enable_ai_foundry_hub_encryption = true
+  ai_foundry_hub_name          = local.ai_foundry_hub_name
+  ai_foundry_hub_description   = local.ai_foundry_hub_name
+  ai_foundry_hub_friendly_name = local.ai_foundry_hub_name
+  high_business_impact_enabled = var.enable_ai_foundry_hub_hbi # whether to enable high business impact
 
   enable_user_assigned_identity = var.enable_user_assigned_identity # whether to enable user-assigned managed identity
   storage_uami_name             = local.storage_uami_name           # only if enable_user_assigned_identity = true
@@ -45,6 +42,7 @@ module "ai_foundry_services" {
   ai_foundry_hub_id           = module.ai_foundry_hub.output.ai_foundry_hub_id
   ai_foundry_hub_workspace_id = module.ai_foundry_hub.output.ai_foundry_hub_workspace_id
   ai_foundry_hub_keyvault_id  = module.ai_foundry_hub.output.ai_foundry_hub_keyvault_id
+  ai_foundry_hub_storage_id   = module.ai_foundry_hub.output.ai_foundry_hub_storage_id
 
   enable_user_assigned_identity = var.enable_user_assigned_identity
   ai_services_uami_name         = local.ai_services_uami_name

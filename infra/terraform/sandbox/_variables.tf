@@ -39,12 +39,6 @@ variable "enable_ai_foundry_hub_hbi" {
   default     = false
 }
 
-variable "enable_ai_foundry_hub_encryption" {
-  description = "Enable encryption for the AI Foundry Hub"
-  type        = bool
-  default     = false
-}
-
 variable "enable_app_insights" {
   description = "Enable Application Insights for the AI Foundry resources"
   type        = bool
@@ -54,10 +48,10 @@ variable "enable_app_insights" {
 variable "storage_cmk_key_policy" {
   description = "Key policy for the customer managed key"
   type = object({
-    key_type   = string
-    key_size   = optional(number, 2048)
-    curve_type = optional(string)
-
+    key_type        = string
+    key_size        = optional(number, 2048)
+    curve_type      = optional(string)
+    expiration_date = optional(string, null) # this module has a logic to set the expiration date from 'expire_after' value
     rotation_policy = optional(object({
       automatic = optional(object({
         time_after_creation = optional(string)
