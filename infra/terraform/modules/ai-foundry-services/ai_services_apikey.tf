@@ -14,6 +14,12 @@ resource "azurerm_key_vault_secret" "apikey_ais" {
   value        = azurerm_ai_services.this.primary_access_key
   content_type = "WorkspaceConnectionSecret"
   key_vault_id = var.ai_foundry_hub_keyvault_id
+
+  lifecycle {
+    ignore_changes = [
+      expiration_date,
+    ]
+  }
 }
 
 resource "azurerm_key_vault_secret" "apikey_aoai" {
@@ -21,4 +27,10 @@ resource "azurerm_key_vault_secret" "apikey_aoai" {
   value        = azurerm_ai_services.this.primary_access_key
   content_type = "WorkspaceConnectionSecret"
   key_vault_id = var.ai_foundry_hub_keyvault_id
+
+  lifecycle {
+    ignore_changes = [
+      expiration_date,
+    ]
+  }
 }
