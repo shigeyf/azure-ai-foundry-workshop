@@ -8,10 +8,10 @@ variable "storage_cmkey_name" {
 variable "storage_cmkey_policy" {
   description = "Key policy for the Storage CMK"
   type = object({
-    key_type   = string
-    key_size   = optional(number, 2048)
-    curve_type = optional(string)
-
+    key_type        = string
+    key_size        = optional(number, 2048)
+    curve_type      = optional(string)
+    expiration_date = optional(string, null)
     rotation_policy = optional(object({
       automatic = optional(object({
         time_after_creation = optional(string)
