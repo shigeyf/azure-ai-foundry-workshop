@@ -33,6 +33,24 @@ variable "enable_public_network_access" {
   default     = true
 }
 
+variable "enable_ai_foundry_hub_hbi" {
+  description = "Enable high business impact for the AI Foundry Hub"
+  type        = bool
+  default     = false
+}
+
+variable "enable_ai_foundry_hub_encryption" {
+  description = "Enable encryption for the AI Foundry Hub"
+  type        = bool
+  default     = false
+}
+
+variable "enable_app_insights" {
+  description = "Enable Application Insights for the AI Foundry resources"
+  type        = bool
+  default     = false
+}
+
 variable "storage_cmk_key_policy" {
   description = "Key policy for the customer managed key"
   type = object({
