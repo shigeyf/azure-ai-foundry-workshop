@@ -16,6 +16,12 @@ variable "tags" {
   default     = {}
 }
 
+variable "enable_user_assigned_identity" {
+  description = "Enable user-assigned identity"
+  type        = bool
+  default     = false
+}
+
 variable "enable_public_network_access" {
   description = "Enable public network access for the Key Vault"
   type        = bool

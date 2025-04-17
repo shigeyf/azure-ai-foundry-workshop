@@ -26,12 +26,6 @@ variable "ai_foundry_hub_keyvault_id" {
   type        = string
 }
 
-variable "enable_user_assigned_identity" {
-  description = "Enable user-assigned identity"
-  type        = bool
-  default     = false
-}
-
 variable "ai_services_uami_name" {
   description = "User-assigned Managed Identity name for the AI Sergvices"
   type        = string
