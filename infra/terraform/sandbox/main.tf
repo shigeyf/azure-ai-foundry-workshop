@@ -24,9 +24,11 @@ module "ai_foundry_hub" {
   ai_foundry_hub_friendly_name = local.ai_foundry_hub_name
   high_business_impact_enabled = var.enable_ai_foundry_hub_hbi # whether to enable high business impact
 
-  enable_user_assigned_identity = var.enable_user_assigned_identity # whether to enable user-assigned managed identity
-  storage_uami_name             = local.storage_uami_name           # only if enable_user_assigned_identity = true
-  ai_foundry_hub_uami_name      = local.ai_foundry_hub_uami_name    # only if enable_user_assigned_identity = true
+  # only if enable_user_assigned_identity = true
+  enable_user_assigned_identity                = var.enable_user_assigned_identity
+  enable_both_user_and_system_managed_identity = var.enable_both_user_and_system_managed_identity
+  storage_uami_name                            = local.storage_uami_name
+  ai_foundry_hub_uami_name                     = local.ai_foundry_hub_uami_name
 
   enable_public_network_access = var.enable_public_network_access
 }
@@ -48,9 +50,12 @@ module "ai_foundry_services" {
   ai_search_name   = local.ai_search_name
   ai_search_sku    = var.ai_search_sku
 
-  enable_user_assigned_identity = var.enable_user_assigned_identity
-  ai_services_uami_name         = local.ai_services_uami_name
-  ai_search_uami_name           = local.ai_search_uami_name
+  # only if enable_user_assigned_identity = true
+  enable_user_assigned_identity                = var.enable_user_assigned_identity
+  enable_both_user_and_system_managed_identity = var.enable_both_user_and_system_managed_identity
+  ai_services_uami_name                        = local.ai_services_uami_name
+  ai_search_uami_name                          = local.ai_search_uami_name
+  ai_foundry_hub_uai_id                        = module.ai_foundry_hub.output.ai_foundry_hub_user_assigned_identity
 
   enable_public_network_access = var.enable_public_network_access
 }
@@ -61,9 +66,13 @@ module "ai_foundry_project" {
   location            = local.location
   tags                = local.tags
 
-  ai_foundry_project_name = local.ai_foundry_project_name
-  ai_foundry_hub_id       = module.ai_foundry_hub.output.ai_foundry_hub_id
+  ai_foundry_project_name    = local.ai_foundry_project_name
+  ai_foundry_hub_id          = module.ai_foundry_hub.output.ai_foundry_hub_id
+  ai_foundry_hub_storage_id  = module.ai_foundry_hub.output.ai_foundry_hub_storage_id
+  ai_foundry_hub_keyvault_id = module.ai_foundry_hub.output.ai_foundry_hub_keyvault_id
 
-  enable_user_assigned_identity = var.enable_user_assigned_identity
-  ai_foundry_project_uami_name  = local.ai_foundry_project_uami_name
+  # only if enable_user_assigned_identity = true
+  enable_user_assigned_identity                = var.enable_user_assigned_identity
+  enable_both_user_and_system_managed_identity = var.enable_both_user_and_system_managed_identity
+  ai_foundry_project_uami_name                 = local.ai_foundry_project_uami_name
 }

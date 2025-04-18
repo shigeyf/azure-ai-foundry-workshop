@@ -27,6 +27,12 @@ variable "enable_user_assigned_identity" {
   default     = false
 }
 
+variable "enable_both_user_and_system_managed_identity" {
+  description = "Enable both user-assigned and system managed identities"
+  type        = bool
+  default     = false
+}
+
 variable "enable_public_network_access" {
   description = "Enable public network access for the AI Foundry resources"
   type        = bool
