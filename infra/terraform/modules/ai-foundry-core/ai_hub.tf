@@ -15,13 +15,13 @@ resource "azurerm_ai_foundry" "this" {
   high_business_impact_enabled = var.high_business_impact_enabled
 
   # container_registry_id          = azurerm_container_registry.this.id
-  application_insights_id        = var.enable_app_insights ? azurerm_application_insights.this[0].id : null
-  primary_user_assigned_identity = var.enable_user_assigned_identity ? azurerm_user_assigned_identity.this[0].id : null
+  application_insights_id = var.enable_app_insights ? azurerm_application_insights.this[0].id : null
 
   # Enable system-assigned managed identity
+  primary_user_assigned_identity = var.enable_user_assigned_identity ? azurerm_user_assigned_identity.hub[0].id : null
   identity {
-    type         = var.enable_user_assigned_identity ? "SystemAssigned, UserAssigned" : "SystemAssigned"
-    identity_ids = var.enable_user_assigned_identity ? [azurerm_user_assigned_identity.this[0].id] : []
+    type         = local.identity_type
+    identity_ids = var.enable_user_assigned_identity ? [azurerm_user_assigned_identity.hub[0].id] : []
   }
 
   dynamic "encryption" {
@@ -29,7 +29,7 @@ resource "azurerm_ai_foundry" "this" {
     content {
       key_id                    = module.core_ai_hub_cmkey[0].output.key_id
       key_vault_id              = module.core_kv.output.keyvault_id
-      user_assigned_identity_id = var.enable_user_assigned_identity ? azurerm_user_assigned_identity.this[0].id : null
+      user_assigned_identity_id = var.enable_user_assigned_identity ? azurerm_user_assigned_identity.hub[0].id : null
     }
   }
 
@@ -48,7 +48,7 @@ resource "azurerm_ai_foundry" "this" {
   }
 
   depends_on = [
-    azurerm_user_assigned_identity.this,
+    azurerm_user_assigned_identity.hub,
     time_sleep.wait_for_ra_propagation,
   ]
 }

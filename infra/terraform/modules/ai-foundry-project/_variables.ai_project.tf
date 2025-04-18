@@ -17,19 +17,8 @@ variable "ai_foundry_project_friendly_name" {
   default     = null
 }
 
-variable "ai_foundry_hub_id" {
-  description = "AI Foundry Hub Id"
-  type        = string
-}
-
 variable "high_business_impact_enabled" {
   description = "High business impact enabled"
-  type        = bool
-  default     = false
-}
-
-variable "enable_user_assigned_identity" {
-  description = "Enable user-assigned identity"
   type        = bool
   default     = false
 }
