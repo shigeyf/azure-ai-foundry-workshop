@@ -29,6 +29,12 @@ variable "enable_ai_foundry_hub_encryption" {
   default     = false
 }
 
+variable "ai_foundry_hub_isolation_mode" {
+  description = "The isolation mode of the AI Foundry Hub: Possible values are Disabled, AllowOnlyApprovedOutbound, and AllowInternetOutbound"
+  type        = string
+  default     = "Disabled"
+}
+
 variable "ai_foundry_hub_uami_name" {
   description = "User-assigned Managed Identity name for the AI Foundry Hub"
   type        = string

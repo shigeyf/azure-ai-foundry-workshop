@@ -33,9 +33,9 @@ resource "azurerm_ai_foundry" "this" {
     }
   }
 
-  # managed_network {
-  #   isolation_mode = "Disabled"
-  # }
+  managed_network {
+    isolation_mode = var.ai_foundry_hub_isolation_mode
+  }
 
   lifecycle {
     # Ignore entire "tags" property, since there is no way to ignore only specific tags with "__SYSTEM__" prefix
