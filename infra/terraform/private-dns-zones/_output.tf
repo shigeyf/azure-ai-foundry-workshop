@@ -7,5 +7,5 @@ output "private_dns_zone_rg" {
 
 output "private_dns_zone_ids" {
   description = "The Ids of the private DNS zones."
-  value       = { for index, zone in azurerm_private_dns_zone.this : zone.name => [zone.id] }
+  value       = [for zone in azurerm_private_dns_zone.this : { name : zone.name, id : zone.id }]
 }

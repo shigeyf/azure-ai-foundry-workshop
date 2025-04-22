@@ -14,5 +14,8 @@ module "core_kv" {
 
   private_endpoint_subnet_id = var.private_endpoint_subnet_id
   private_endpoint_name      = var.keyvault_private_endpoint_name
-  private_dns_zone_ids       = var.private_dns_zone_ids["privatelink.vaultcore.azure.net"]
+  private_dns_zone_ids = [
+    for zone in var.private_dns_zone_ids : zone.id
+    if zone.name == "privatelink.vaultcore.azure.net"
+  ]
 }

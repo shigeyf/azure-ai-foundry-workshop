@@ -17,11 +17,12 @@ resource "azurerm_private_endpoint" "ais" {
 
   private_dns_zone_group {
     name = "dns-zone-group"
-    private_dns_zone_ids = concat(
-      var.private_dns_zone_ids["privatelink.cognitiveservices.azure.com"],
-      var.private_dns_zone_ids["privatelink.openai.azure.com"],
-      var.private_dns_zone_ids["privatelink.services.ai.azure.com"],
-    )
+    private_dns_zone_ids = [
+      for zone in var.private_dns_zone_ids : zone.id
+      if zone.name == "privatelink.cognitiveservices.azure.com"
+      || zone.name == "privatelink.openai.azure.com"
+      || zone.name == "privatelink.services.ai.azure.com"
+    ]
   }
 
   depends_on = [

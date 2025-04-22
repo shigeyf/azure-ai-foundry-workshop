@@ -16,8 +16,11 @@ resource "azurerm_private_endpoint" "srch" {
   }
 
   private_dns_zone_group {
-    name                 = "dns-zone-group"
-    private_dns_zone_ids = var.private_dns_zone_ids["privatelink.search.windows.net"]
+    name = "dns-zone-group"
+    private_dns_zone_ids = [
+      for zone in var.private_dns_zone_ids : zone.id
+      if zone.name == "privatelink.search.windows.net"
+    ]
   }
 
   depends_on = [

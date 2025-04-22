@@ -72,12 +72,12 @@ variable "private_endpoint_subnet_id" {
 }
 
 variable "private_dns_zone_ids" {
-  type        = map(list(string))
+  type = list(object(
+    {
+      name = string
+      id   = string
+    }
+  ))
   description = "Map object of list of Private DNS Zone Id"
-  default = {
-    "privatelink.cognitiveservices.azure.com" = [],
-    "privatelink.openai.azure.com"            = [],
-    "privatelink.services.ai.azure.com"       = [],
-    "privatelink.search.windows.net"          = [],
-  }
+  default     = []
 }

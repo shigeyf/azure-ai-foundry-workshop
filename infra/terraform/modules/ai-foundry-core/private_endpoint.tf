@@ -17,10 +17,11 @@ resource "azurerm_private_endpoint" "this" {
 
   private_dns_zone_group {
     name = "dns-zone-group"
-    private_dns_zone_ids = concat(
-      var.private_dns_zone_ids["privatelink.api.azureml.ms"],
-      var.private_dns_zone_ids["privatelink.notebooks.azure.net"],
-    )
+    private_dns_zone_ids = [
+      for zone in var.private_dns_zone_ids : zone.id
+      if zone.name == "privatelink.api.azureml.ms"
+      || zone.name == "privatelink.notebooks.azure.net"
+    ]
   }
 
   depends_on = [

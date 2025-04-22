@@ -47,12 +47,12 @@ variable "enable_remote_deployment" {
 }
 
 variable "private_dns_zone_ids" {
-  type        = map(list(string))
+  type = list(object(
+    {
+      name = string
+      id   = string
+    }
+  ))
   description = "Map object of list of Private DNS Zone Id"
-  default = {
-    "privatelink.blob.core.windows.net" = [],
-    "privatelink.vaultcore.azure.net"   = [],
-    "privatelink.api.azureml.ms"        = [],
-    "privatelink.notebooks.azure.net"   = [],
-  }
+  default     = []
 }
