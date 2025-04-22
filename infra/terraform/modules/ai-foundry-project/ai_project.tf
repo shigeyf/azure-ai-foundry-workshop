@@ -51,7 +51,7 @@ resource "azapi_resource" "this" {
   }
 
   body = {
-    kind = "project"
+    kind = "Project"
     properties = {
       description                 = var.ai_foundry_project_description == null ? var.ai_foundry_project_name : var.ai_foundry_project_description
       friendlyName                = var.ai_foundry_project_friendly_name == null ? var.ai_foundry_project_name : var.ai_foundry_project_friendly_name
@@ -61,7 +61,14 @@ resource "azapi_resource" "this" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [
+      parent_id, // ignore changes to parent_id
+    ]
+  }
+
   depends_on = [
     azurerm_user_assigned_identity.this,
+    time_sleep.ra_propagation_delay,
   ]
 }

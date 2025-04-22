@@ -48,6 +48,15 @@ resource "azapi_resource" "srch_connections" {
   ignore_missing_property   = true
   schema_validation_enabled = true
 
+  lifecycle {
+    ignore_changes = [
+      body.properties.credentials.key,
+      body.properties.target,
+      location,
+      tags,
+    ]
+  }
+
   depends_on = [
     azurerm_key_vault_secret.apikey_srch,
   ]
