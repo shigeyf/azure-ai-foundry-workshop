@@ -65,8 +65,19 @@ variable "enable_public_network_access" {
   default     = false
 }
 
-#variable "private_endpoint_subnet_id" {
-#  description = "Subnet ID for the private endpoint"
-#  type        = string
-#  default     = null
-#}
+variable "private_endpoint_subnet_id" {
+  description = "Subnet ID for the private endpoint"
+  type        = string
+  default     = null
+}
+
+variable "private_dns_zone_ids" {
+  type        = map(list(string))
+  description = "Map object of list of Private DNS Zone Id"
+  default = {
+    "privatelink.cognitiveservices.azure.com" = [],
+    "privatelink.openai.azure.com"            = [],
+    "privatelink.services.ai.azure.com"       = [],
+    "privatelink.search.windows.net"          = [],
+  }
+}

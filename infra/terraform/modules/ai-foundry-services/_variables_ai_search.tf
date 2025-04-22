@@ -34,17 +34,6 @@ variable "ai_search_semantic_search_sku" {
   // Please see the product documentation for more information.
 }
 
-variable "ai_search_uami_name" {
-  description = "User-assigned Managed Identity name for the AI Search service"
-  type        = string
-  default     = null
-
-  validation {
-    condition     = !(var.enable_user_assigned_identity && var.ai_search_uami_name == null)
-    error_message = "'ai_search_uami_name' must be set if 'enable_user_assigned_identity' is enabled."
-  }
-}
-
 variable "ai_search_hosting_mode" {
   description = "The hosting mode of the Azure AI Search service for High Density partitions (that allow for up to 1000 indexes) should be supported"
   type        = string
@@ -71,4 +60,26 @@ variable "ai_search_customer_managed_key_enforcement_enabled" {
   description = "Specifies whether the Search Service should enforce that non-customer resources are encrypted"
   type        = bool
   default     = false
+}
+
+variable "ai_search_uami_name" {
+  description = "User-assigned Managed Identity name for the AI Search service"
+  type        = string
+  default     = null
+
+  validation {
+    condition     = !(var.enable_user_assigned_identity && var.ai_search_uami_name == null)
+    error_message = "'ai_search_uami_name' must be set if 'enable_user_assigned_identity' is enabled."
+  }
+}
+
+variable "ai_search_private_endpoint_name" {
+  description = "Private Endpoint name for the AI Search service"
+  type        = string
+  default     = null
+
+  validation {
+    condition     = !(!var.enable_public_network_access && var.ai_search_private_endpoint_name == null)
+    error_message = "'ai_search_private_endpoint_name' must be set if 'enable_public_network_access' is disabled."
+  }
 }
