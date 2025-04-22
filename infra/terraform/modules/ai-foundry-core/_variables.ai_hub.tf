@@ -56,9 +56,3 @@ variable "ai_foundry_hub_private_endpoint_name" {
     error_message = "'ai_foundry_hub_private_endpoint_name' must be set if 'enable_public_network_access' is disabled."
   }
 }
-
-variable "private_dns_zone_ids" {
-  type        = list(string)
-  description = "List of Private DNS Zone Id"
-  default     = []
-}
