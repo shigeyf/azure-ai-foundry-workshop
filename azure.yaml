@@ -1,0 +1,6 @@
+name: azure-ai-foundry-simple-sandbox
+metadata:
+  template: azure-ai-foundry-simple-sandbox@0.0.1
+infra:
+  provider: terraform
+  path: infra/terraform/sandbox
